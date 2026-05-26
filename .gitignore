@@ -1,0 +1,24 @@
+# StarCraft TMG SFX Companion - Git Ignore
+
+# Ignore heavy archives and zips (sfx.zip is ~170MB, which exceeds GitHub's 100MB file limit)
+*.zip
+*.rar
+*.7z
+
+# System / IDE / Temp files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.vscode/
+.idea/
+.gemini/
+
+# Python cache / virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/

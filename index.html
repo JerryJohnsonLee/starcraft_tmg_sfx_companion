@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>StarCraft TMG SFX Companion</title>
+    <!-- Google Fonts for StarCraft/Sci-Fi HUD styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-neutral">
+    
+    <!-- CRT Overlay & Grid Lines for authentic retro console vibe -->
+    <div class="crt-overlay"></div>
+    <div class="crt-scanlines"></div>
+
+    <div class="app-container">
+        <!-- Main Sticky Top Header -->
+        <header class="app-header">
+            <div class="hud-top-border"></div>
+            <div class="hud-main-bar">
+                <h1 class="hud-title">SC TMG // SFX HUD</h1>
+                <button id="btn-stop-all" class="hud-btn-danger" title="Stop all playing sounds">STOP ALL</button>
+            </div>
+            
+            <!-- Faction Nav Tabs -->
+            <nav class="hud-tabs">
+                <button class="tab-btn active" data-tab="ost">
+                    <span class="tab-icon">🎵</span>
+                    <span class="tab-text">OST</span>
+                </button>
+                <button class="tab-btn" data-tab="terran">
+                    <span class="tab-icon">⚙️</span>
+                    <span class="tab-text">TERRAN</span>
+                </button>
+                <button class="tab-btn" data-tab="zerg">
+                    <span class="tab-icon">🧬</span>
+                    <span class="tab-text">ZERG</span>
+                </button>
+                <button class="tab-btn" data-tab="protoss">
+                    <span class="tab-icon">🔮</span>
+                    <span class="tab-text">PROTOSS</span>
+                </button>
+            </nav>
+            
+            <!-- Global Volume HUD Controls -->
+            <div class="global-controls">
+                <div class="vol-control">
+                    <span class="vol-label">OST VOL</span>
+                    <input type="range" id="volume-ost" min="0" max="100" value="50" class="hud-slider">
+                    <span class="vol-value" id="vol-ost-val">50%</span>
+                </div>
+                <div class="vol-control">
+                    <span class="vol-label">SFX VOL</span>
+                    <input type="range" id="volume-sfx" min="0" max="100" value="80" class="hud-slider">
+                    <span class="vol-value" id="vol-sfx-val">80%</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Bar (hidden on OST tab, shown on Faction tabs) -->
+        <div id="search-container" class="search-container hidden">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="unit-search" placeholder="FILTER UNITS..." autocomplete="off">
+                <button id="clear-search" class="clear-btn">&times;</button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content -->
+        <main class="app-content">
+
+            <!-- OST PLAYER VIEW -->
+            <section id="view-ost" class="tab-view active">
+                <div class="console-panel">
+                    <div class="panel-header">BATTLE MUSIC INJECTOR</div>
+                    
+                    <!-- CRT Song Display -->
+                    <div class="crt-display-panel">
+                        <div class="crt-glow-grid"></div>
+                        <div class="display-label">AUDIO SOURCE TRANSMISSION STATUS</div>
+                        <div id="ost-status-indicator" class="display-status">IDLE</div>
+                        <div class="display-label">CURRENT TRACK</div>
+                        <div class="display-track-container">
+                            <div id="ost-track-title" class="display-track">NO BATTLE MUSIC ACTIVE</div>
+                        </div>
+                    </div>
+
+                    <!-- Simplified Play/Pause Toggle -->
+                    <div class="play-controls-container">
+                        <button id="btn-ost-play-pause" class="huge-play-btn">
+                            <span class="play-icon">▶</span> PLAY MUSIC
+                        </button>
+                    </div>
+
+                    <!-- Configuration Options -->
+                    <div class="config-grid">
+                        <!-- StarCraft Version Select -->
+                        <div class="config-card">
+                            <div class="card-title">GAME VERSION</div>
+                            <div class="toggle-group">
+                                <label class="hud-checkbox-container">
+                                    <input type="checkbox" id="version-sc1" checked>
+                                    <span class="hud-checkbox"></span>
+                                    STARCRAFT I
+                                </label>
+                                <label class="hud-checkbox-container">
+                                    <input type="checkbox" id="version-sc2" checked>
+                                    <span class="hud-checkbox"></span>
+                                    STARCRAFT II
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Faction Tracks Select -->
+                        <div class="config-card">
+                            <div class="card-title">MUSIC TACTICAL FACTION</div>
+                            <div class="toggle-group">
+                                <label class="hud-checkbox-container">
+                                    <input type="checkbox" id="race-terran" checked>
+                                    <span class="hud-checkbox"></span>
+                                    TERRAN TRACKS
+                                </label>
+                                <label class="hud-checkbox-container">
+                                    <input type="checkbox" id="race-zerg" checked>
+                                    <span class="hud-checkbox"></span>
+                                    ZERG TRACKS
+                                </label>
+                                <label class="hud-checkbox-container">
+                                    <input type="checkbox" id="race-protoss" checked>
+                                    <span class="hud-checkbox"></span>
+                                    PROTOSS TRACKS
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TERRAN SFX VIEW -->
+            <section id="view-terran" class="tab-view">
+                <div id="terran-unit-container" class="units-grid">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+            </section>
+
+            <!-- ZERG SFX VIEW -->
+            <section id="view-zerg" class="tab-view">
+                <div id="zerg-unit-container" class="units-grid">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+            </section>
+
+            <!-- PROTOSS SFX VIEW -->
+            <section id="view-protoss" class="tab-view">
+                <div id="protoss-unit-container" class="units-grid">
+                    <!-- Loaded dynamically via app.js -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Web Audio & Core Javascript Files -->
+    <script src="audio-registry.js?v=ogg-v2"></script>
+    <script src="app.js?v=ogg-v2"></script>
+</body>
+</html>
