@@ -1,11 +1,12 @@
 import os
 import subprocess
+import shutil
 
-ffmpeg_path = r"C:\Users\jerry\AppData\Roaming\bilibili\ffmpeg\ffmpeg.exe"
+ffmpeg_path = "ffmpeg"  # Update this with the path to your ffmpeg executable, or leave as "ffmpeg" if it is in your system PATH
 
 def convert_to_ogg(root_dir):
-    if not os.path.exists(ffmpeg_path):
-        print(f"Error: ffmpeg.exe not found at {ffmpeg_path}")
+    if not shutil.which(ffmpeg_path):
+        print(f"Error: ffmpeg executable '{ffmpeg_path}' not found in PATH or as a file.")
         return
         
     print(f"Starting OGG conversion in '{root_dir}' using ffmpeg...")
