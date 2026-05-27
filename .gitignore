@@ -22,3 +22,7 @@ __pycache__/
 .venv/
 venv/
 env/
+
+# Helper scripts
+process_logo.py
+

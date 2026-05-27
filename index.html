@@ -21,26 +21,26 @@
         <header class="app-header">
             <div class="hud-top-border"></div>
             <div class="hud-main-bar">
-                <h1 class="hud-title">SC TMG // SFX HUD</h1>
+                <img src="pics/app_logo.png" class="hud-logo" alt="SC TMG Logo">
                 <button id="btn-stop-all" class="hud-btn-danger" title="Stop all playing sounds">STOP ALL</button>
             </div>
             
             <!-- Faction Nav Tabs -->
             <nav class="hud-tabs">
                 <button class="tab-btn active" data-tab="ost">
-                    <span class="tab-icon">🎵</span>
-                    <span class="tab-text">OST</span>
+                    <span class="tab-icon-img" style="-webkit-mask-image: url('pics/sc_logo.png'); mask-image: url('pics/sc_logo.png');"></span>
+                    <span class="tab-text">CONTROL CENTER</span>
                 </button>
                 <button class="tab-btn" data-tab="terran">
-                    <span class="tab-icon">⚙️</span>
+                    <span class="tab-icon-img" style="-webkit-mask-image: url('pics/terran_logo.png'); mask-image: url('pics/terran_logo.png');"></span>
                     <span class="tab-text">TERRAN</span>
                 </button>
                 <button class="tab-btn" data-tab="zerg">
-                    <span class="tab-icon">🧬</span>
+                    <span class="tab-icon-img" style="-webkit-mask-image: url('pics/zerg logo.png'); mask-image: url('pics/zerg logo.png');"></span>
                     <span class="tab-text">ZERG</span>
                 </button>
                 <button class="tab-btn" data-tab="protoss">
-                    <span class="tab-icon">🔮</span>
+                    <span class="tab-icon-img" style="-webkit-mask-image: url('pics/protoss_logo.png'); mask-image: url('pics/protoss_logo.png');"></span>
                     <span class="tab-text">PROTOSS</span>
                 </button>
             </nav>
@@ -135,6 +135,25 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Attribution Section -->
+                    <div class="hud-attribution">
+                        <span>Made by</span>
+                        <a href="https://github.com/JerryJohnsonLee" target="_blank" class="author-link">
+                            <img src="pics/author_avatar.jpg" class="author-avatar" alt="JerryJohnsonLee">
+                            JerryJohnsonLee
+                        </a>
+                        <span>with</span>
+                        <span class="antigravity-brand">
+                            <svg class="antigravity-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="5 5" />
+                                <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.2" />
+                                <path d="M50,22 L75,70 L62,70 L50,44 L38,70 L25,70 Z" fill="currentColor" />
+                                <circle cx="50" cy="12" r="4" fill="currentColor" class="floating-particle" />
+                            </svg>
+                            Antigravity
+                        </span>
                     </div>
                 </div>
             </section>

@@ -822,3 +822,142 @@ html, body {
         gap: 24px;
     }
 }
+
+/* Custom CSS-Mask Faction Nav Icons */
+.tab-icon-img {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: var(--hud-text-muted);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    margin-bottom: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.tab-btn.active .tab-icon-img {
+    background-color: var(--hud-accent);
+}
+
+/* HUD Logo on top */
+.hud-logo {
+    max-height: 38px;
+    max-width: 240px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px var(--hud-accent-glow));
+    transition: filter 0.5s ease;
+}
+
+/* Made-by Attribution Footer */
+.hud-attribution {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--hud-border);
+    font-size: 0.75rem;
+    color: var(--hud-text-muted);
+    font-family: var(--hud-mono-font);
+    text-transform: uppercase;
+}
+
+.author-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--hud-accent-secondary);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid transparent;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.author-link:hover {
+    color: #ffffff;
+    background: rgba(0, 170, 255, 0.15);
+    border-color: var(--hud-accent-secondary);
+    box-shadow: 0 0 8px rgba(0, 170, 255, 0.3);
+}
+
+.author-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid var(--hud-accent-secondary);
+    object-fit: cover;
+}
+
+.antigravity-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--hud-accent);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--hud-accent-glow);
+}
+
+.antigravity-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    color: var(--hud-accent);
+    filter: drop-shadow(0 0 3px var(--hud-accent-glow));
+    animation: float-ascend 3s ease-in-out infinite;
+}
+
+@keyframes float-ascend {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating-particle {
+    animation: pulse-particle 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-particle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Responsive Mobile Rules: Bottom Navigation Bar */
+@media (max-width: 768px) {
+    /* Fixed Bottom Nav Tabs */
+    .hud-tabs {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 999;
+        background-color: rgba(6, 9, 12, 0.98);
+        border-top: 2px solid var(--hud-border);
+        border-bottom: none !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.8);
+        padding-bottom: env(safe-area-inset-bottom); /* Support modern mobile safe areas */
+    }
+
+    .tab-btn {
+        padding: 10px 5px;
+        font-size: 0.65rem;
+    }
+    
+    .tab-btn.active {
+        border-bottom: none !important;
+        border-top: 2px solid var(--hud-accent);
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Padding for the main scroll container so bottom tabs do not cover up content */
+    .app-content {
+        padding-bottom: 80px; /* Safe padding for bottom navigation bar */
+    }
+}
