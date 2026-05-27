@@ -134,9 +134,11 @@ html, body {
 
 .hud-main-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 10px 15px;
+    position: relative;
+    height: 68px;
 }
 
 .hud-title {
@@ -823,10 +825,10 @@ html, body {
     }
 }
 
-/* Custom CSS-Mask Faction Nav Icons */
+/* Custom CSS-Mask Faction Nav Icons - 75% of previous size (30px x 30px) */
 .tab-icon-img {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: inline-block;
     background-color: var(--hud-text-muted);
     -webkit-mask-size: contain;
@@ -843,13 +845,16 @@ html, body {
     background-color: var(--hud-accent);
 }
 
-/* HUD Logo on top */
+/* HUD Logo on top - Centered and raw color display - 75% of previous size (51px height) */
 .hud-logo {
-    max-height: 38px;
-    max-width: 240px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 51px;
+    max-width: 300px;
     object-fit: contain;
-    filter: drop-shadow(0 0 6px var(--hud-accent-glow));
-    transition: filter 0.5s ease;
+    transition: all 0.3s ease;
 }
 
 /* Made-by Attribution Footer */
@@ -858,11 +863,11 @@ html, body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     margin-top: 25px;
     padding-top: 15px;
     border-top: 1px solid var(--hud-border);
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--hud-text-muted);
     font-family: var(--hud-mono-font);
     text-transform: uppercase;
@@ -876,8 +881,8 @@ html, body {
     text-decoration: none;
     font-weight: bold;
     border: 1px solid transparent;
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 5px;
     transition: all 0.2s ease;
 }
 
@@ -889,10 +894,10 @@ html, body {
 }
 
 .author-avatar {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    border: 1px solid var(--hud-accent-secondary);
+    border: 2px solid var(--hud-accent-secondary);
     object-fit: cover;
 }
 
@@ -906,8 +911,8 @@ html, body {
 }
 
 .antigravity-icon {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     fill: currentColor;
     color: var(--hud-accent);
     filter: drop-shadow(0 0 3px var(--hud-accent-glow));
@@ -958,6 +963,6 @@ html, body {
 
     /* Padding for the main scroll container so bottom tabs do not cover up content */
     .app-content {
-        padding-bottom: 80px; /* Safe padding for bottom navigation bar */
+        padding-bottom: 90px; /* Safe padding for bottom navigation bar */
     }
 }
