@@ -26,5 +26,7 @@ env/
 # Helper scripts
 process_logo.py
 process_icons.py
+trim_logos.py
+
 
 

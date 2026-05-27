@@ -831,8 +831,8 @@ html, body {
     height: 30px;
     display: inline-block;
     background-color: var(--hud-text-muted);
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
