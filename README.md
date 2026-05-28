@@ -1,5 +1,9 @@
 # StarCraft Tabletop Miniature Game (TMG) SFX Companion App
 
+<p align="center">
+  <img src="pics/app_logo.png" alt="StarCraft TMG SFX Companion Logo" width="360">
+</p>
+
 An immersive, responsive, retro-futuristic sci-fi soundboard and soundtrack console designed for tabletop wargaming. This application runs entirely client-side as a Single-Page Application (SPA), optimized for mobile/tablet wargaming layouts and ready for free, static hosting (e.g., GitHub Pages).
 
 ---
@@ -18,7 +22,6 @@ Tapping the faction tabs dynamically morphs the entire visual interface of the c
 *   **Double-Randomization**: Leverages a robust Fisher-Yates array shuffle, combined with a dynamic random-index splice to guarantee high-entropy startup tracks and smooth automated transitions.
 *   **Tactical Skip-on-Play**: Pausing the background music and hitting Play immediately pulls a new randomized track, serving as a manual skip control.
 *   **Master Volume Grids**: Independent wargame volume sliders allow background OST to keep playing smoothly while multiple overlapping unit voice lines run.
-*   **Master STOP ALL Button**: A sticky, prominent red panic button that instantly silences all background music and SFX overlays on the battlefield.
 
 ### 3. Faction Soundboards
 Collapsible accordion cards keep the mobile interface compact. Trigger unit audio lines directly from the tactile console grids:
@@ -102,3 +105,10 @@ Because this is a serverless Single-Page Application, it can be deployed for fre
 2.  Go to **Repository Settings -> Pages**.
 3.  Set the **Source** to "Deploy from a branch", select **`main`** and **`/ (root)`**, and click **Save**.
 4.  Within minutes, your StarCraft SFX HUD is live online!
+
+---
+
+## ⚖️ Legal Disclaimer
+
+This is an unofficial, non-commercial fan-made companion app. All StarCraft audio, music, and asset rights belong entirely to Blizzard Entertainment. This project is not affiliated with, endorsed by, or associated with Blizzard Entertainment or Archon Studio.
+

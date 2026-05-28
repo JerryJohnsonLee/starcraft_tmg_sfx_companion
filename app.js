@@ -16,27 +16,27 @@ let activeTab = 'ost';
 // In-Game Faction Role Metadata (Adds visual richness & wargame flavor)
 const UNIT_METADATA = {
     // Terran
-    raynor: { name: "Jim Raynor", role: "Hero Commando", desc: "Tactical mastermind with heavy Gauss fire" },
-    marine: { name: "Marine", role: "Light Infantry", desc: "Frontline rifle squad" },
-    marauder: { name: "Marauder", role: "Armored Assault", desc: "Heavy grenade launcher squad" },
-    medic: { name: "Medic", role: "Support Specialist", desc: "Nanorobotic field medic squad" },
-    goliath: { name: "Goliath", role: "All-Terrain Mech", desc: "Twin autocannon and rocket anti-air walker" },
+    raynor: { name: "Jim Raynor", role: "Tactician Hero", desc: 'Weapon: Commando Rifle, "Justice" Revolver (Upgrade: C-14 Rifle)' },
+    marine: { name: "Marine", role: "Damage Dealer", desc: 'Weapon: C-14 Rifle (Upgrade: AGG-12, Rocket Launcher)' },
+    marauder: { name: "Marauder", role: "Tank", desc: 'Weapon: Quad K12' },
+    medic: { name: "Medic", role: "Lifesaver", desc: 'Weapon: Medpack' },
+    goliath: { name: "Goliath", role: "Elite Damage Dealer", desc: 'Weapon: Autocannon, Underbelly Machine Gun, Hellfire Missiles (Upgrade: Scatter Missiles, Haywire Missiles)' },
     
     // Zerg
-    kerrigan: { name: "Kerrigan", role: "Hero Queen of Blades", desc: "Psionic biological powerhouse" },
-    zergling: { name: "Zergling", role: "Swarm Strain", desc: "Fast melee assault swarm" },
-    roach: { name: "Roach", role: "Assault Bio-Mech", desc: "Armored acid-spitting shock trooper" },
-    queen: { name: "Queen", role: "Hive Commander", desc: "Spawn larvae and biological defender" },
-    omega_worm: { name: "Omega Worm", role: "Biological Conduit", desc: "Deep subterranean transport network" },
-    hydralisk: { name: "Hydralisk", role: "Ranged Attacker", desc: "Acid spine launcher strain" },
+    kerrigan: { name: "Kerrigan", role: "Damage Dealing Hero", desc: 'Weapon: Energy Blast, Blades' },
+    zergling: { name: "Zergling", role: "Damage Dealer", desc: 'Weapon: Claws (Upgrade: Shredding Claws)' },
+    roach: { name: "Roach", role: "Tank", desc: 'Weapon: Acid Saliva, Claws' },
+    queen: { name: "Queen", role: "Lifesaver", desc: 'Weapon: Talons, Acid Spines' },
+    omega_worm: { name: "Omega Worm", role: "Tactical Structure", desc: 'SUBTERRANEAN TRANSPORT NETWORK' },
+    hydralisk: { name: "Hydralisk", role: "Elite Damage Dealer", desc: 'Weapon: Needle Spine, Scyche' },
     
     // Protoss
-    artanis: { name: "Artanis", role: "Hero Hierarch", desc: "Supreme frontline fighter and high templar" },
-    zealot: { name: "Zealot", role: "Protoss Vanguard", desc: "Dual psi-blade charge shock trooper" },
-    adept: { name: "Adept", role: "Frontline Scout", desc: "Fast ranged harasser with shadow projection" },
-    sentry: { name: "Sentry", role: "Robotic Support", desc: "Force field generator and guardian shield" },
-    stalker: { name: "Stalker", role: "Shadow Hunter", desc: "Psionic blink battle walker" },
-    pylon: { name: "Pylon", role: "Psionic Matrix Anchor", desc: "Warp field generator and power node" }
+    artanis: { name: "Artanis", role: "Tank Hero", desc: 'Weapon: Twilight Blades' },
+    zealot: { name: "Zealot", role: "Damage Dealer", desc: 'Weapon: Psi Blades' },
+    adept: { name: "Adept", role: "Damage Dealer", desc: 'Weapon: Glaive Cannon' },
+    sentry: { name: "Sentry", role: "Lifesaver", desc: 'Weapon: Disruption Beam' },
+    stalker: { name: "Stalker", role: "Elite Damage Dealer", desc: 'Weapon: Particle Disruptors' },
+    pylon: { name: "Pylon", role: "Tactical Structure", desc: 'WARP FIELD GENERATOR' }
 };
 
 // UI Elements Cache
@@ -105,22 +105,32 @@ function initEvents() {
         });
     });
 
-    // Master Stop Button
-    elements.btnStopAll.addEventListener('click', stopAllSounds);
+    // Master Stop Button Safety Check (Button removed in index.html, check prevents runtime crashes)
+    if (elements.btnStopAll) {
+        elements.btnStopAll.addEventListener('click', stopAllSounds);
+    }
 
     // OST Play/Pause Button
     elements.btnOstPlayPause.addEventListener('click', toggleMusic);
 
-    // OST Playlist Checkbox Changes
+    // OST Playlist Checkbox Changes with real-time HUD toast notification banners
     const playlistToggles = [
-        elements.chkSC1, elements.chkSC2,
-        elements.chkTerran, elements.chkZerg, elements.chkProtoss
+        { el: elements.chkSC1, label: "StarCraft I OST" },
+        { el: elements.chkSC2, label: "StarCraft II OST" },
+        { el: elements.chkTerran, label: "Terran themed OST" },
+        { el: elements.chkZerg, label: "Zerg themed OST" },
+        { el: elements.chkProtoss, label: "Protoss themed OST" }
     ];
     playlistToggles.forEach(toggle => {
-        toggle.addEventListener('change', () => {
-            // Re-shuffle playlist dynamically on next play, or if currently playing
-            buildPlaylist();
-        });
+        if (toggle.el) {
+            toggle.el.addEventListener('change', (e) => {
+                const action = e.target.checked ? "added to" : "removed from";
+                showToast(`${toggle.label} ${action} playlist`);
+                
+                // Re-shuffle playlist dynamically on next play, or if currently playing
+                buildPlaylist();
+            });
+        }
     });
 
     // Search Box Listener
@@ -409,6 +419,37 @@ function stopAllSounds() {
 }
 
 /* ==========================================================================
+   INTERACTIVE HUD TOAST BANNERS
+   ========================================================================== */
+function showToast(message) {
+    let container = document.getElementById('hud-notification-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'hud-notification-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'hud-toast';
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    // Trigger reflow to start transition
+    toast.offsetHeight;
+
+    // Add show class
+    toast.classList.add('show');
+
+    // Auto fade out and remove
+    setTimeout(() => {
+        toast.classList.remove('show');
+        toast.addEventListener('transitionend', () => {
+            toast.remove();
+        });
+    }, 3000);
+}
+
+/* ==========================================================================
    DYNAMIC UI GENERATION
    ========================================================================== */
 function renderAllUnitBoards() {
@@ -470,7 +511,7 @@ function renderFactionUnits(factionName, factionUnits, container) {
             // Structures only get Deploy and Death
             htmlContent += `
                 <button class="sfx-btn btn-deploy" id="btn-${unitKey}-deploy">DEPLOY</button>
-                <button class="sfx-btn btn-death" id="btn-${unitKey}-death">DEATH</button>
+                <button class="sfx-btn btn-death" id="btn-${unitKey}-death">DESTROYED</button>
             `;
         } else {
             // Standard Mobile Unit Grid
@@ -486,70 +527,70 @@ function renderFactionUnits(factionName, factionUnits, container) {
             }
             
             if (unitObj.attack && unitObj.attack.length > 0) {
-                htmlContent += `<button class="sfx-btn" id="btn-${unitKey}-attack">ATTACK</button>`;
+                const label = (unitKey === 'zergling') ? "MELEE COMBAT" : "ATTACK";
+                htmlContent += `<button class="sfx-btn" id="btn-${unitKey}-attack">${label}</button>`;
+            }
+
+            if (unitObj.heal && unitObj.heal.length > 0) {
+                htmlContent += `<button class="sfx-btn" id="btn-${unitKey}-heal">HEAL</button>`;
+            }
+
+            if (unitObj.combat && unitObj.combat.length > 0) {
+                htmlContent += `<button class="sfx-btn" id="btn-${unitKey}-combat">MELEE COMBAT</button>`;
             }
             
             if (unitObj.death && unitObj.death.length > 0) {
-                htmlContent += `<button class="sfx-btn btn-death" id="btn-${unitKey}-death">DEATH</button>`;
+                htmlContent += `<button class="sfx-btn btn-death" id="btn-${unitKey}-death">DESTROYED</button>`;
             }
         }
 
         htmlContent += `</div>`; // Close standard btn-matrix
 
-        // 2. Burrow/Unburrow Abilities (Zerg only)
+        // 2. Additional Abilities Section (Burrow, Stimpack, and custom Scanned abilities under a single separator)
         const hasBurrow = (unitObj.burrow && unitObj.burrow.length > 0) && (unitObj.unburrow && unitObj.unburrow.length > 0);
-        if (hasBurrow) {
-            htmlContent += `
-                <div class="special-divider">
-                    <div class="special-line"></div>
-                    <div class="special-title">HIVE STRAIN ABILITY</div>
-                    <div class="special-line"></div>
-                </div>
-                <div class="btn-matrix">
-                    <button class="sfx-btn special-btn" id="btn-${unitKey}-burrow">BURROW</button>
-                    <button class="sfx-btn special-btn" id="btn-${unitKey}-unburrow">UNBURROW</button>
-                </div>
-            `;
-        }
-
-        // 3. Stimpack Complex Sound Effect Combinations (Marine & Marauder)
         const hasStimpack = (unitObj.stimpack && unitObj.stimpack.length > 0);
-        if (hasStimpack) {
-            htmlContent += `
-                <div class="special-divider">
-                    <div class="special-line"></div>
-                    <div class="special-title">CHEMICAL OVERCLOCK</div>
-                    <div class="special-line"></div>
-                </div>
-                <div class="btn-matrix">
-                    <button style="grid-column: span 2;" class="sfx-btn special-btn" id="btn-${unitKey}-stimpack">STIMPACK</button>
-                </div>
-            `;
-        }
-
-        // 4. Extensible Scanned Custom Abilities Buttons (Generic auto-rendered extra buttons)
         const standardKeys = [
             'deploy', 'ready', 'move', 'attack', 'death', 'deathFX', 
-            'burrow', 'unburrow', 'stimpack', 'stimpackVO'
+            'burrow', 'unburrow', 'stimpack', 'stimpackVO', 'heal', 'combat'
         ];
         const extraKeys = Object.keys(unitObj).filter(k => !standardKeys.includes(k));
-        
-        if (extraKeys.length > 0) {
+
+        if (hasBurrow || hasStimpack || extraKeys.length > 0) {
             htmlContent += `
                 <div class="special-divider">
                     <div class="special-line"></div>
-                    <div class="special-title">SCANNED ABILITIES</div>
+                    <div class="special-title">ADDITIONAL ABILITIES</div>
                     <div class="special-line"></div>
                 </div>
-                <div class="extra-btn-matrix">
             `;
-            
-            extraKeys.forEach(k => {
-                const label = k.replace('_', ' ').toUpperCase();
-                htmlContent += `<button class="sfx-btn special-btn" id="btn-${unitKey}-${k}">${label}</button>`;
-            });
 
-            htmlContent += `</div>`; // Close extra-btn-matrix
+            if (hasBurrow) {
+                htmlContent += `
+                    <div class="btn-matrix">
+                        <button class="sfx-btn special-btn" id="btn-${unitKey}-burrow">BURROW</button>
+                        <button class="sfx-btn special-btn" id="btn-${unitKey}-unburrow">UNBURROW</button>
+                    </div>
+                `;
+            }
+
+            if (hasStimpack) {
+                htmlContent += `
+                    <div class="btn-matrix">
+                        <button style="grid-column: span 2;" class="sfx-btn special-btn" id="btn-${unitKey}-stimpack">STIMPACK</button>
+                    </div>
+                `;
+            }
+
+            if (extraKeys.length > 0) {
+                htmlContent += `
+                    <div class="extra-btn-matrix">
+                `;
+                extraKeys.forEach(k => {
+                    const label = k.replace('_', ' ').toUpperCase();
+                    htmlContent += `<button class="sfx-btn special-btn" id="btn-${unitKey}-${k}">${label}</button>`;
+                });
+                htmlContent += `</div>`; // Close extra-btn-matrix
+            }
         }
 
         htmlContent += `</div>`; // Close unit-body
@@ -584,10 +625,12 @@ function bindUnitBtnEvents(unitKey, unitObj, cardElement, isStructure) {
             bindEl(`btn-${unitKey}-deploy`, () => playRandomSfxFromList(unitObj.ready, cardElement));
         }
         
-        // Move, Attack, Death
+        // Move, Attack, Death, Heal, Combat
         bindEl(`btn-${unitKey}-move`, () => playRandomSfxFromList(unitObj.move, cardElement));
         bindEl(`btn-${unitKey}-attack`, () => playRandomSfxFromList(unitObj.attack, cardElement));
         bindEl(`btn-${unitKey}-death`, () => handleDeathSFX(unitObj, cardElement));
+        bindEl(`btn-${unitKey}-heal`, () => playRandomSfxFromList(unitObj.heal, cardElement));
+        bindEl(`btn-${unitKey}-combat`, () => playRandomSfxFromList(unitObj.combat, cardElement));
     }
 
     // Special soundboard bindings
@@ -598,7 +641,7 @@ function bindUnitBtnEvents(unitKey, unitObj, cardElement, isStructure) {
     // Custom Scanned Extra Buttons Binding
     const standardKeys = [
         'deploy', 'ready', 'move', 'attack', 'death', 'deathFX', 
-        'burrow', 'unburrow', 'stimpack', 'stimpackVO'
+        'burrow', 'unburrow', 'stimpack', 'stimpackVO', 'heal', 'combat'
     ];
     Object.keys(unitObj).forEach(k => {
         if (!standardKeys.includes(k)) {

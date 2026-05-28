@@ -328,7 +328,7 @@ html, body {
 }
 
 /* ==========================================================================
-   OST MUSIC INJECTOR SECTION
+   OST MUSIC PLAYER SECTION
    ========================================================================== */
 .console-panel {
     background-color: var(--hud-panel);
@@ -692,12 +692,6 @@ html, body {
 }
 
 /* Action-specific styling refinements */
-.sfx-btn.btn-deploy {
-    border-left: 3px solid var(--hud-accent);
-}
-.sfx-btn.btn-death {
-    border-left: 3px solid var(--hud-danger);
-}
 .sfx-btn.btn-death:active {
     background: var(--hud-danger);
     border-color: var(--hud-danger);
@@ -857,81 +851,44 @@ html, body {
     transition: all 0.3s ease;
 }
 
-/* Made-by Attribution Footer */
-.hud-attribution {
+/* GitHub Repository Link Footer Styling */
+.hud-repo-link-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
     margin-top: 25px;
     padding-top: 15px;
     border-top: 1px solid var(--hud-border);
-    font-size: 0.78rem;
-    color: var(--hud-text-muted);
+}
+
+.hud-repo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--hud-accent-secondary);
+    text-decoration: none;
     font-family: var(--hud-mono-font);
+    font-size: 0.78rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(0, 170, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: rgba(0, 170, 255, 0.03);
+    transition: all 0.2s ease;
     text-transform: uppercase;
 }
 
-.author-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--hud-accent-secondary);
-    text-decoration: none;
-    font-weight: bold;
-    border: 1px solid transparent;
-    padding: 3px 8px;
-    border-radius: 5px;
-    transition: all 0.2s ease;
-}
-
-.author-link:hover {
+.hud-repo-link:hover {
     color: #ffffff;
     background: rgba(0, 170, 255, 0.15);
     border-color: var(--hud-accent-secondary);
-    box-shadow: 0 0 8px rgba(0, 170, 255, 0.3);
+    box-shadow: 0 0 10px var(--hud-accent-glow);
 }
 
-.author-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid var(--hud-accent-secondary);
-    object-fit: cover;
-}
-
-.antigravity-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--hud-accent);
-    font-weight: bold;
-    text-shadow: 0 0 5px var(--hud-accent-glow);
-}
-
-.antigravity-icon {
-    width: 30px;
-    height: 30px;
+.github-icon {
+    width: 16px;
+    height: 16px;
     fill: currentColor;
-    color: var(--hud-accent);
-    filter: drop-shadow(0 0 3px var(--hud-accent-glow));
-    animation: float-ascend 3s ease-in-out infinite;
-}
-
-@keyframes float-ascend {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0px); }
-}
-
-.floating-particle {
-    animation: pulse-particle 1.5s infinite ease-in-out;
-}
-
-@keyframes pulse-particle {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
 }
 
 /* Responsive Mobile Rules: Bottom Navigation Bar */
@@ -966,3 +923,74 @@ html, body {
         padding-bottom: 90px; /* Safe padding for bottom navigation bar */
     }
 }
+
+/* ==========================================================================
+   CONFIG FRAME, LEGAL DISCLAIMER & INTERACTIVE TOAST BANNERS
+   ========================================================================== */
+
+/* The stylized border around playlist versions and races */
+.config-frame {
+    border: 1px solid var(--hud-border);
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.config-frame-title {
+    font-family: var(--hud-title-font);
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--hud-accent-secondary);
+    padding: 0 10px;
+    text-shadow: 0 0 5px rgba(0, 170, 255, 0.4);
+}
+
+/* Legal and copyright disclaimer footer */
+.hud-disclaimer {
+    font-size: 0.62rem;
+    color: var(--hud-text-muted);
+    text-align: center;
+    line-height: 1.4;
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px dashed var(--hud-border);
+    text-transform: uppercase;
+}
+
+/* Floating wargaming notification toast banners container */
+#hud-notification-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+    max-width: 400px;
+    pointer-events: none;
+}
+
+.hud-toast {
+    background: rgba(6, 9, 12, 0.95);
+    border: 1px solid var(--hud-accent);
+    color: #ffffff;
+    font-family: var(--hud-mono-font);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 10px var(--hud-accent-glow);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hud-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
