@@ -1,0 +1,17 @@
+unit:
+  name: "Stalker"
+  role: "Elite, Damage Dealer"
+  weapon: "Particle Disruptors"
+regular_abilities:
+  ready:
+    sound_sources: [ready]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death, deathFX]
+    playback: simultaneous
+additional_abilities:
+  blink:
+    sound_sources: [blink]

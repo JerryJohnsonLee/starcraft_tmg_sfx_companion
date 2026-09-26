@@ -1,0 +1,11 @@
+unit:
+  name: "Omega Worm"
+  role: "Structure, Tactician"
+  description: "SUBTERRANEAN TRANSPORT NETWORK"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  {}

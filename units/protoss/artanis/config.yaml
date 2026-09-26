@@ -1,0 +1,16 @@
+unit:
+  name: "Artanis"
+  role: "Hero, Tank"
+  weapon: "Twilight Blades"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  melee_combat:
+    sound_sources: [combat]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  charge:
+    sound_sources: [charge]

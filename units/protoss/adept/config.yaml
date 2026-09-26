@@ -1,0 +1,17 @@
+unit:
+  name: "Adept"
+  role: "Core, Damage Dealer"
+  weapon: "Glaive Cannon"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death, deathFX]
+    playback: simultaneous
+additional_abilities:
+  psionic_transfer:
+    sound_sources: [psionic_transfer]

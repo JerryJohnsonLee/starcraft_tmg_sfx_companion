@@ -1,0 +1,23 @@
+unit:
+  name: "Queen"
+  role: "Support, Lifesaver"
+  weapon: "Talons, Acid Spines"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  melee_combat:
+    sound_sources: [combat]
+  destroyed:
+    sound_sources: [death, deathFX]
+    playback: simultaneous
+additional_abilities:
+  burrow:
+    button_size: 1
+    sound_sources: [burrow]
+  unburrow:
+    button_size: 1
+    sound_sources: [unburrow]

@@ -1,0 +1,22 @@
+unit:
+  name: "Kerrigan"
+  role: "Hero, Damage Dealer"
+  weapon: "Energy Blast, Blades"
+regular_abilities:
+  ready:
+    sound_sources: [ready]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  melee_combat:
+    sound_sources: [combat]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  burrow:
+    button_size: 1
+    sound_sources: [burrow]
+  unburrow:
+    button_size: 1
+    sound_sources: [unburrow]

@@ -1,0 +1,20 @@
+unit:
+  name: "Zergling"
+  role: "Core, Damage Dealer"
+  weapon: "Claws (Upgrade: Shredding Claws)"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  melee_combat:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  burrow:
+    button_size: 1
+    sound_sources: [burrow]
+  unburrow:
+    button_size: 1
+    sound_sources: [unburrow]

@@ -1,0 +1,19 @@
+unit:
+  name: "Marine"
+  role: "Core, Damage Dealer"
+  weapon: "C-14 Rifle (Upgrade: AGG-12, Rocket Launcher)"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  stimpack:
+    sound_sources: [stimpack, stimpackVO]
+    playback: simultaneous
+  rocket_launcher:
+    sound_sources: [rocket_launcher]

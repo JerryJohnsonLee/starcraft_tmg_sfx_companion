@@ -1,0 +1,18 @@
+unit:
+  name: "Marauder"
+  role: "Core, Tank"
+  weapon: "Quad K12"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death, deathFX]
+    playback: simultaneous
+additional_abilities:
+  stimpack:
+    sound_sources: [stimpack, stimpackVO]
+    playback: simultaneous

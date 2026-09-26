@@ -1,0 +1,15 @@
+unit:
+  name: "Medic"
+  role: "Support, Lifesaver"
+  description: "Utility: Medpack"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  heal:
+    sound_sources: [heal]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  {}

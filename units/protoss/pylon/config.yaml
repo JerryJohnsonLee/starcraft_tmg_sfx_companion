@@ -1,0 +1,11 @@
+unit:
+  name: "Pylon"
+  role: "Structure, Tactician"
+  description: "WARP FIELD GENERATOR"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  {}

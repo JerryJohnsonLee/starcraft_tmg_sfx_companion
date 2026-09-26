@@ -1,0 +1,16 @@
+unit:
+  name: "Jim Raynor"
+  role: "Hero, Tactician"
+  weapon: "Commando Rifle, \"Justice\" Revolver (Upgrade: C-14 Rifle)"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  revolver:
+    sound_sources: [revolver]
