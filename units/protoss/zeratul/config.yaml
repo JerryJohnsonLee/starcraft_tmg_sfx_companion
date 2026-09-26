@@ -1,0 +1,16 @@
+unit:
+  name: "zeratul"
+  role: "Hero, Damage dealer"
+  weapon: "Master Warp Blade"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  blink:
+    sound_sources: [blink]

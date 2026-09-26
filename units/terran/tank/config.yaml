@@ -1,0 +1,23 @@
+unit:
+  name: "siege tank"
+  role: "Elite, Damage Dealer"
+  weapon: "Twin cannon, shock cannon"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  tank_mode_attack:
+    sound_sources: [attack_tank_mode]
+  siege_mode_attack:
+    sound_sources: [attack_siege_mode,attack_impact]
+    playback: simultaneous
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  transform_to_siege_mode:
+    button_size: 1
+    sound_sources: [transform_to_siege]
+  transform_to_tank_mode:
+    button_size: 1
+    sound_sources: [transform_to_tank]

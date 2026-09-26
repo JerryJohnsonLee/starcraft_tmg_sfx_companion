@@ -13,32 +13,6 @@ let musicVolume = 0.5; // Default 50%
 let sfxVolume = 0.8;   // Default 80%
 let activeTab = 'ost';
 
-// In-Game Faction Role Metadata (Adds visual richness & wargame flavor)
-const UNIT_METADATA = {
-    // Terran
-    raynor: { name: "Jim Raynor", role: "Tactician Hero", desc: 'Weapon: Commando Rifle, "Justice" Revolver (Upgrade: C-14 Rifle)' },
-    marine: { name: "Marine", role: "Damage Dealer", desc: 'Weapon: C-14 Rifle (Upgrade: AGG-12, Rocket Launcher)' },
-    marauder: { name: "Marauder", role: "Tank", desc: 'Weapon: Quad K12' },
-    medic: { name: "Medic", role: "Lifesaver", desc: 'Weapon: Medpack' },
-    goliath: { name: "Goliath", role: "Elite Damage Dealer", desc: 'Weapon: Autocannon, Underbelly Machine Gun, Hellfire Missiles (Upgrade: Scatter Missiles, Haywire Missiles)' },
-    
-    // Zerg
-    kerrigan: { name: "Kerrigan", role: "Damage Dealing Hero", desc: 'Weapon: Energy Blast, Blades' },
-    zergling: { name: "Zergling", role: "Damage Dealer", desc: 'Weapon: Claws (Upgrade: Shredding Claws)' },
-    roach: { name: "Roach", role: "Tank", desc: 'Weapon: Acid Saliva, Claws' },
-    queen: { name: "Queen", role: "Lifesaver", desc: 'Weapon: Talons, Acid Spines' },
-    omega_worm: { name: "Omega Worm", role: "Tactical Structure", desc: 'SUBTERRANEAN TRANSPORT NETWORK' },
-    hydralisk: { name: "Hydralisk", role: "Elite Damage Dealer", desc: 'Weapon: Needle Spine, Scyche' },
-    
-    // Protoss
-    artanis: { name: "Artanis", role: "Tank Hero", desc: 'Weapon: Twilight Blades' },
-    zealot: { name: "Zealot", role: "Damage Dealer", desc: 'Weapon: Psi Blades' },
-    adept: { name: "Adept", role: "Damage Dealer", desc: 'Weapon: Glaive Cannon' },
-    sentry: { name: "Sentry", role: "Lifesaver", desc: 'Weapon: Disruption Beam' },
-    stalker: { name: "Stalker", role: "Elite Damage Dealer", desc: 'Weapon: Particle Disruptors' },
-    pylon: { name: "Pylon", role: "Tactical Structure", desc: 'WARP FIELD GENERATOR' }
-};
-
 // UI Elements Cache
 const elements = {
     body: document.body,
@@ -319,11 +293,22 @@ function updateMusicUI(isPlaying, trackPath = '') {
 /* ==========================================================================
    SFX SOUNDBOARD ENGINE
    ========================================================================== */
-function playSfx(trackPath, cardElement = null) {
-    if (!trackPath) return;
+function playSfx(trackPath, cardElement = null, onComplete = null) {
+    if (!trackPath) {
+        if (onComplete) onComplete();
+        return null;
+    }
 
     const audio = new Audio(trackPath);
     audio.volume = sfxVolume;
+    let finished = false;
+    const finish = () => {
+        if (finished) return;
+        finished = true;
+        if (cardElement) decrementCardActivePlaying(cardElement);
+        activeSfxAudios.delete(audio);
+        if (onComplete) onComplete();
+    };
 
     // Track active SFX to support "STOP ALL"
     activeSfxAudios.add(audio);
@@ -331,24 +316,15 @@ function playSfx(trackPath, cardElement = null) {
     // Add visual glowing indicator on card when sound triggers
     if (cardElement) {
         incrementCardActivePlaying(cardElement);
-        audio.onended = () => {
-            decrementCardActivePlaying(cardElement);
-            activeSfxAudios.delete(audio);
-        };
-        audio.onerror = () => {
-            decrementCardActivePlaying(cardElement);
-            activeSfxAudios.delete(audio);
-        };
-    } else {
-        audio.onended = () => {
-            activeSfxAudios.delete(audio);
-        };
-        audio.onerror = () => {
-            activeSfxAudios.delete(audio);
-        };
     }
+    audio.onended = finish;
+    audio.onerror = finish;
 
-    audio.play().catch(e => console.error("SFX audio blocked by browser: ", e));
+    audio.play().catch(e => {
+        console.error("SFX audio blocked by browser: ", e);
+        finish();
+    });
+    return audio;
 }
 
 // Visual active playing classes (supports multiple overlapping tracks per unit card)
@@ -369,33 +345,24 @@ function decrementCardActivePlaying(cardElement) {
     }
 }
 
-function playRandomSfxFromList(sfxList, cardElement) {
-    if (!sfxList || sfxList.length === 0) return;
-    const randomIndex = Math.floor(Math.random() * sfxList.length);
-    playSfx(sfxList[randomIndex], cardElement);
-}
+function playConfiguredAbility(ability, unitAudio, cardElement) {
+    const tracks = (ability.sound_sources || [])
+        .map(source => unitAudio[source] || [])
+        .filter(trackList => trackList.length > 0)
+        .map(trackList => trackList[Math.floor(Math.random() * trackList.length)]);
+    if (tracks.length === 0) return;
 
-// Complex multi-track triggers
-function handleDeathSFX(unitObj, cardElement) {
-    // 1. Play standard death
-    if (unitObj.death && unitObj.death.length > 0) {
-        playRandomSfxFromList(unitObj.death, cardElement);
+    if (ability.playback === 'sequential') {
+        const playNext = index => {
+            if (index < tracks.length) {
+                playSfx(tracks[index], cardElement, () => playNext(index + 1));
+            }
+        };
+        playNext(0);
+        return;
     }
-    
-    // 2. Play deathFX simultaneously if present
-    if (unitObj.deathFX && unitObj.deathFX.length > 0) {
-        playRandomSfxFromList(unitObj.deathFX, cardElement);
-    }
-}
 
-function handleStimpackSFX(unitObj, cardElement) {
-    // Play stimpack sound + stimpackVO sound simultaneously
-    if (unitObj.stimpack && unitObj.stimpack.length > 0) {
-        playRandomSfxFromList(unitObj.stimpack, cardElement);
-    }
-    if (unitObj.stimpackVO && unitObj.stimpackVO.length > 0) {
-        playRandomSfxFromList(unitObj.stimpackVO, cardElement);
-    }
+    tracks.forEach(track => playSfx(track, cardElement));
 }
 
 function stopAllSounds() {
@@ -648,6 +615,104 @@ function bindUnitBtnEvents(unitKey, unitObj, cardElement, isStructure) {
             bindEl(`btn-${unitKey}-${k}`, () => playRandomSfxFromList(unitObj[k], cardElement));
         }
     });
+}
+
+// Config-driven renderer: unit cards and triggers are defined in each config.yaml
+// and embedded in AUDIO_REGISTRY by generate-registry.ps1.
+function renderAllUnitBoards() {
+    const registry = window.AUDIO_REGISTRY;
+    renderFactionUnits('terran', registry.units.terran, registry.unitConfigs.terran, elements.terranContainer);
+    renderFactionUnits('zerg', registry.units.zerg, registry.unitConfigs.zerg, elements.zergContainer);
+    renderFactionUnits('protoss', registry.units.protoss, registry.unitConfigs.protoss, elements.protossContainer);
+}
+
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[character]);
+}
+
+function abilityLabel(key) {
+    return key.replace(/_/g, ' ').toUpperCase();
+}
+
+function renderFactionUnits(factionName, factionUnits, factionConfigs, container) {
+    container.innerHTML = '';
+    if (!factionUnits || Object.keys(factionUnits).length === 0) {
+        container.innerHTML = '<div class="no-results">SYSTEM FAILURE: FACTION DATA CORRUPT</div>';
+        return;
+    }
+
+    Object.keys(factionUnits).forEach(unitKey => {
+        const unitAudio = factionUnits[unitKey];
+        const config = factionConfigs && factionConfigs[unitKey];
+        if (!config || !config.unit) throw new Error(`Missing generated config for ${factionName}/${unitKey}`);
+
+        const metadata = config.unit;
+        const unitName = metadata.name || unitKey;
+        const description = metadata.description || (metadata.weapon ? `Weapon: ${metadata.weapon}` : 'Wargame asset');
+        const regular = Object.entries(config.regular_abilities || {});
+        const additional = Object.entries(config.additional_abilities || {});
+        const card = document.createElement('div');
+        card.className = 'unit-card';
+        card.setAttribute('data-unit-name', unitName.toLowerCase());
+        card.setAttribute('data-play-count', '0');
+
+        let html = `
+            <div class="unit-header" onclick="toggleCard(this.parentNode)">
+                <div style="display: flex; align-items: center;">
+                    <div class="sound-indicator"></div>
+                    <div class="unit-title-group">
+                        <span class="unit-name">${escapeHtml(unitName)}</span>
+                        <span class="unit-role">${escapeHtml(metadata.role || 'FIGHTER')}</span>
+                    </div>
+                </div>
+                <span class="chevron-icon">▼</span>
+            </div>
+            <div class="unit-body">
+                <div style="font-size: 0.65rem; color: var(--hud-text-muted); margin-bottom: 15px; border-left: 2px solid var(--hud-border); padding-left: 8px;">
+                    ${escapeHtml(description).toUpperCase()}
+                </div>
+                <div class="btn-matrix">${renderConfiguredButtons(regular, false)}</div>
+        `;
+
+        if (additional.length > 0) {
+            html += `
+                <div class="special-divider">
+                    <div class="special-line"></div>
+                    <div class="special-title">ADDITIONAL ABILITIES</div>
+                    <div class="special-line"></div>
+                </div>
+                <div class="btn-matrix">${renderConfiguredButtons(additional, true)}</div>
+            `;
+        }
+        html += '</div>';
+        card.innerHTML = html;
+        container.appendChild(card);
+
+        card.querySelectorAll('.config-ability-btn').forEach(button => {
+            const ability = button.dataset.abilityGroup === 'additional'
+                ? config.additional_abilities[button.dataset.abilityKey]
+                : config.regular_abilities[button.dataset.abilityKey];
+            button.addEventListener('click', event => {
+                event.stopPropagation();
+                playConfiguredAbility(ability, unitAudio, card);
+            });
+        });
+    });
+}
+
+function renderConfiguredButtons(entries, isAdditional) {
+    return entries.map(([key, ability]) => {
+        const defaultSize = isAdditional ? 2 : 1;
+        const buttonSize = Number(ability.button_size || defaultSize) === 1 ? 1 : 2;
+        const classes = ['sfx-btn', 'config-ability-btn'];
+        if (isAdditional) classes.push('special-btn');
+        if (key === 'destroyed') classes.push('btn-death');
+        if (key === 'deploy' || key === 'ready') classes.push('btn-deploy');
+        const group = isAdditional ? 'additional' : 'regular';
+        return `<button type="button" class="${classes.join(' ')}" data-ability-key="${escapeHtml(key)}" data-ability-group="${group}" style="grid-column: span ${buttonSize}">${abilityLabel(key)}</button>`;
+    }).join('');
 }
 
 // Collapsible accordion card toggling
