@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=mobile-viewport-v1">
+    <link rel="stylesheet" href="styles.css?v=role-filter-v1">
 </head>
 <body class="theme-neutral">
     
@@ -61,12 +61,43 @@
 
         <!-- Search Bar (hidden on OST tab, shown on Faction tabs) -->
         <div id="search-container" class="search-container hidden">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="unit-search" placeholder="FILTER UNITS..." autocomplete="off">
-                <button id="clear-search" class="clear-btn">&times;</button>
+            <div class="unit-filter-row">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="unit-search" placeholder="FILTER UNITS..." autocomplete="off">
+                    <button id="clear-search" class="clear-btn" type="button" aria-label="Clear unit search">&times;</button>
+                </div>
+                <button id="open-role-filter" class="role-filter-btn" type="button" aria-haspopup="dialog" aria-controls="role-filter-dialog" aria-pressed="false">
+                    <span aria-hidden="true">☷</span>
+                    <span id="role-filter-count" class="role-filter-count" aria-hidden="true" hidden></span>
+                    ROLE FILTER
+                </button>
             </div>
         </div>
+
+        <dialog id="role-filter-dialog" class="role-filter-dialog" aria-labelledby="role-filter-title">
+            <div class="role-filter-dialog-header">
+                <div>
+                    <div class="panel-header" id="role-filter-title">FILTER BY ROLE</div>
+                    <div class="role-filter-subtitle" id="role-filter-faction"></div>
+                </div>
+                <button id="close-role-filter" class="clear-btn dialog-close-btn" type="button" aria-label="Close role filters">&times;</button>
+            </div>
+            <div id="role-filter-columns" class="role-filter-columns">
+                <section class="role-filter-group" aria-labelledby="army-slot-title">
+                    <h2 id="army-slot-title" class="card-title">ARMY SLOT</h2>
+                    <div id="army-slot-options" class="role-filter-options"></div>
+                </section>
+                <section class="role-filter-group" aria-labelledby="combat-role-title">
+                    <h2 id="combat-role-title" class="card-title">COMBAT ROLE</h2>
+                    <div id="combat-role-options" class="role-filter-options"></div>
+                </section>
+            </div>
+            <div class="role-filter-dialog-actions">
+                <button id="clear-role-filters" class="role-filter-action secondary" type="button">CLEAR FILTERS</button>
+                <button id="apply-role-filters" class="role-filter-action" type="button">DONE</button>
+            </div>
+        </dialog>
 
         <!-- Main Scrollable Content -->
         <main class="app-content">
@@ -182,6 +213,6 @@
 
     <!-- Web Audio & Core Javascript Files -->
     <script src="audio-registry.js?v=config-v1"></script>
-    <script src="app.js?v=config-v1"></script>
+    <script src="app.js?v=role-filter-v1"></script>
 </body>
 </html>

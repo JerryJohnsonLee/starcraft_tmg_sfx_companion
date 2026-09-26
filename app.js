@@ -12,6 +12,7 @@ let activeSfxAudios = new Set();
 let musicVolume = 0.5; // Default 50%
 let sfxVolume = 0.8;   // Default 80%
 let activeTab = 'ost';
+const roleFiltersByFaction = new Map();
 
 // UI Elements Cache
 const elements = {
@@ -42,7 +43,16 @@ const elements = {
     // Search
     searchContainer: document.getElementById('search-container'),
     unitSearch: document.getElementById('unit-search'),
-    clearSearch: document.getElementById('clear-search')
+    clearSearch: document.getElementById('clear-search'),
+    openRoleFilter: document.getElementById('open-role-filter'),
+    roleFilterCount: document.getElementById('role-filter-count'),
+    roleFilterDialog: document.getElementById('role-filter-dialog'),
+    closeRoleFilter: document.getElementById('close-role-filter'),
+    clearRoleFilters: document.getElementById('clear-role-filters'),
+    applyRoleFilters: document.getElementById('apply-role-filters'),
+    roleFilterFaction: document.getElementById('role-filter-faction'),
+    armySlotOptions: document.getElementById('army-slot-options'),
+    combatRoleOptions: document.getElementById('combat-role-options')
 };
 
 /* ==========================================================================
@@ -113,6 +123,25 @@ function initEvents() {
         elements.unitSearch.value = '';
         filterUnits();
     });
+
+    elements.openRoleFilter.addEventListener('click', openRoleFilterDialog);
+    elements.closeRoleFilter.addEventListener('click', () => elements.roleFilterDialog.close());
+    elements.applyRoleFilters.addEventListener('click', () => elements.roleFilterDialog.close());
+    elements.clearRoleFilters.addEventListener('click', clearActiveRoleFilters);
+    elements.roleFilterDialog.addEventListener('click', event => {
+        if (event.target === elements.roleFilterDialog) elements.roleFilterDialog.close();
+    });
+    [elements.armySlotOptions, elements.combatRoleOptions].forEach(options => {
+        options.addEventListener('change', event => {
+            if (!event.target.matches('input[type="checkbox"]')) return;
+            const filters = getActiveRoleFilters();
+            const selected = event.target.dataset.filterGroup === 'army-slot' ? filters.armySlots : filters.combatRoles;
+            if (event.target.checked) selected.add(event.target.value);
+            else selected.delete(event.target.value);
+            updateRoleFilterButton();
+            filterUnits();
+        });
+    });
 }
 
 /* ==========================================================================
@@ -142,6 +171,7 @@ function switchTab(faction) {
         elements.searchContainer.classList.remove('hidden');
         // Reset Search Input on tab change
         elements.unitSearch.value = '';
+        updateRoleFilterButton();
         filterUnits();
     }
 }
@@ -657,6 +687,9 @@ function renderFactionUnits(factionName, factionUnits, factionConfigs, container
         card.className = 'unit-card';
         card.setAttribute('data-unit-name', unitName.toLowerCase());
         card.setAttribute('data-play-count', '0');
+        const roleParts = String(metadata.role || '').split(',').map(part => part.trim()).filter(Boolean);
+        card.dataset.armySlot = normalizeRoleFilterValue(roleParts[0] || 'Unassigned');
+        card.dataset.combatRole = normalizeRoleFilterValue(roleParts[1] || 'Unassigned');
 
         let html = `
             <div class="unit-header" onclick="toggleCard(this.parentNode)">
@@ -732,11 +765,15 @@ function filterUnits() {
     if (!container) return;
 
     const cards = container.querySelectorAll('.unit-card');
+    const filters = getActiveRoleFilters();
     let visibleCount = 0;
 
     cards.forEach(card => {
         const name = card.getAttribute('data-unit-name') || '';
-        if (name.includes(query)) {
+        const matchesSearch = name.includes(query);
+        const matchesArmySlot = filters.armySlots.size === 0 || filters.armySlots.has(card.dataset.armySlot);
+        const matchesCombatRole = filters.combatRoles.size === 0 || filters.combatRoles.has(card.dataset.combatRole);
+        if (matchesSearch && matchesArmySlot && matchesCombatRole) {
             card.style.display = 'block';
             visibleCount++;
         } else {
@@ -750,7 +787,7 @@ function filterUnits() {
         if (!noResultsNotice) {
             noResultsNotice = document.createElement('div');
             noResultsNotice.className = 'no-results-banner no-results';
-            noResultsNotice.textContent = "COULD NOT LOCATE SPECIFIED WARGAME OBJECT";
+            noResultsNotice.textContent = 'EMPTY';
             container.appendChild(noResultsNotice);
         }
     } else {
@@ -758,4 +795,75 @@ function filterUnits() {
             noResultsNotice.remove();
         }
     }
+}
+
+function normalizeRoleFilterValue(value) {
+    return String(value).trim().toLocaleLowerCase();
+}
+
+function getActiveRoleFilters() {
+    if (!roleFiltersByFaction.has(activeTab)) {
+        roleFiltersByFaction.set(activeTab, { armySlots: new Set(), combatRoles: new Set() });
+    }
+    return roleFiltersByFaction.get(activeTab);
+}
+
+function openRoleFilterDialog() {
+    const container = document.getElementById(`${activeTab}-unit-container`);
+    if (!container) return;
+
+    const cards = Array.from(container.querySelectorAll('.unit-card'));
+    const filters = getActiveRoleFilters();
+    const armySlots = [...new Set(cards.map(card => card.dataset.armySlot).filter(Boolean))].sort();
+    const combatRoles = [...new Set(cards.map(card => card.dataset.combatRole).filter(Boolean))].sort();
+
+    elements.roleFilterFaction.textContent = `${activeTab.toUpperCase()} UNITS`;
+    renderRoleFilterOptions(elements.armySlotOptions, armySlots, 'army-slot', filters.armySlots);
+    renderRoleFilterOptions(elements.combatRoleOptions, combatRoles, 'combat-role', filters.combatRoles);
+    elements.roleFilterDialog.showModal();
+}
+
+function renderRoleFilterOptions(container, values, group, selectedValues) {
+    container.replaceChildren();
+    if (values.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'role-filter-empty';
+        empty.textContent = 'NO OPTIONS AVAILABLE';
+        container.appendChild(empty);
+        return;
+    }
+
+    values.forEach(value => {
+        const label = document.createElement('label');
+        label.className = 'role-filter-option';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = value;
+        checkbox.dataset.filterGroup = group;
+        checkbox.checked = selectedValues.has(value);
+        const text = document.createElement('span');
+        text.textContent = value.toLocaleUpperCase();
+        label.append(checkbox, text);
+        container.appendChild(label);
+    });
+}
+
+function clearActiveRoleFilters() {
+    const filters = getActiveRoleFilters();
+    filters.armySlots.clear();
+    filters.combatRoles.clear();
+    elements.roleFilterDialog.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    updateRoleFilterButton();
+    filterUnits();
+}
+
+function updateRoleFilterButton() {
+    const filters = getActiveRoleFilters();
+    const count = filters.armySlots.size + filters.combatRoles.size;
+    elements.roleFilterCount.textContent = String(count);
+    elements.roleFilterCount.hidden = count === 0;
+    elements.openRoleFilter.setAttribute('aria-pressed', String(count > 0));
+    elements.openRoleFilter.setAttribute('aria-label', count > 0 ? `Role filters, ${count} selected` : 'Filter by army slot or combat role');
 }
