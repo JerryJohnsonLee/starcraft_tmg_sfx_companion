@@ -383,6 +383,30 @@ window.AUDIO_REGISTRY = {
                                               }
                               },
                   "terran":  {
+                                 "firebat":  {
+                                                 "attack":  [
+                                                                "units/terran/firebat/sc1/attack/TerranFirebatFire00SC1.ogg?v=07d703b7-14814",
+                                                                "units/terran/firebat/sc1/attack/TerranFirebatFire01SC1.ogg?v=580e3583-14736"
+                                                            ],
+                                                 "death":  [
+                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath00SC1.ogg?v=c131bb5d-13062",
+                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath01SC1.ogg?v=d2f401d6-15529",
+                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath02SC1.ogg?v=26fabdba-15939"
+                                                           ],
+                                                 "deploy":  [
+                                                                "units/terran/firebat/sc1/deploy/TerranFirebatReady00SC1.ogg?v=fbb6bafa-15012"
+                                                            ],
+                                                 "move":  [
+                                                              "units/terran/firebat/sc1/move/TerranFirebatYes00SC1.ogg?v=d274ed65-11396",
+                                                              "units/terran/firebat/sc1/move/TerranFirebatYes01SC1.ogg?v=3d949a48-11427",
+                                                              "units/terran/firebat/sc1/move/TerranFirebatYes02SC1.ogg?v=40e48bf1-14821",
+                                                              "units/terran/firebat/sc1/move/TerranFirebatYes03SC1.ogg?v=1f10093a-16474"
+                                                          ],
+                                                 "stimpackVO":  [
+                                                                    "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack00SC1.ogg?v=8fb44c82-17831",
+                                                                    "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack01SC1.ogg?v=4ffb8690-15270"
+                                                                ]
+                                             },
                                  "goliath":  {
                                                  "attack":  [
                                                                 "units/terran/goliath/attack/Goliath_GroundAttackLaunch0.ogg?v=319d1ce7-19028",
@@ -1838,6 +1862,43 @@ window.AUDIO_REGISTRY = {
                                                     }
                                     },
                         "terran":  {
+                                       "firebat":  {
+                                                       "unit":  {
+                                                                    "name":  "Firebat",
+                                                                    "role":  "Core, Damage Dealer",
+                                                                    "weapon":  "Flamethrowers",
+                                                                    "audio_source":  "sc1"
+                                                                },
+                                                       "regular_abilities":  {
+                                                                                 "deploy":  {
+                                                                                                "sound_sources":  [
+                                                                                                                      "deploy"
+                                                                                                                  ]
+                                                                                            },
+                                                                                 "move":  {
+                                                                                              "sound_sources":  [
+                                                                                                                    "move"
+                                                                                                                ]
+                                                                                          },
+                                                                                 "attack":  {
+                                                                                                "sound_sources":  [
+                                                                                                                      "attack"
+                                                                                                                  ]
+                                                                                            },
+                                                                                 "destroyed":  {
+                                                                                                   "sound_sources":  [
+                                                                                                                         "death"
+                                                                                                                     ]
+                                                                                               }
+                                                                             },
+                                                       "additional_abilities":  {
+                                                                                    "stimpack":  {
+                                                                                                     "sound_sources":  [
+                                                                                                                           "stimpackVO"
+                                                                                                                       ]
+                                                                                                 }
+                                                                                }
+                                                   },
                                        "goliath":  {
                                                        "unit":  {
                                                                     "name":  "Goliath",

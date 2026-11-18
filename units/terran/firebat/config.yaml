@@ -1,0 +1,27 @@
+unit:
+  name: "Firebat"
+  # PROVISIONAL (wave 4, 2026-11): role and weapon are guesses until the official card sheet is published.
+  # The store lists a Flame Template (attack), a Fire Wall token and two Stimpack tokens.
+  role: "Core, Damage Dealer"
+  weapon: "Flamethrowers"
+  # StarCraft I audio only for now. When the StarCraft II (WoL) Firebat audio is imported, remove this line
+  # and the unit gets the usual SC1 / SC2 switch (the sc1/ folders stay as they are).
+  audio_source: sc1
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  # Flame Template: the two "short fire burst" clips of the SC1 Firebat.
+  attack:
+    sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  # In StarCraft I the Firebat uses the Marine's Stimpack clip (injection sound plus voice). With SC2 audio,
+  # add `stimpack` (the Marine's SC2 injection effect) in front and `sc1_sound_sources: [stimpackVO]` for the SC1 bank.
+  stimpack:
+    sound_sources: [stimpackVO]
+  # TODO: Fire Wall (token on the store page): no sound source identified yet. Once there is one, add:
+  #   fire_wall:
+  #     sound_sources: [fire_wall]

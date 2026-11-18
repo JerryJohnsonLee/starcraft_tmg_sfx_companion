@@ -31,6 +31,9 @@ $voiceMap = @(
     # SC1-only units (config `audio_source: sc1`): no SC2 audio exists, the sc1/ folders are their only bank.
     # Defiler Mound ("ZergDefilerMound*") lines are a building and never match the exact kinds below.
     @{ unit = 'zerg/defiler';    prefix = 'ZergDefiler';          actions = @{ deploy = @('Ready', 'What'); move = 'Yes'; death = 'Death'; combatVO = 'Pissed'; consume = 'Consume' } }   # Plague is curated in $heroDeployMap below
+    # Wave 4 Firebat: SC1 audio only until the SC2 (WoL) files are imported. "Fire" are two short flamethrower bursts
+    # (the SC1 attack sound); the Stimpack clip is the Marine's (curated below). The seven "Pissed" lines are not used.
+    @{ unit = 'terran/firebat';  prefix = 'TerranFirebat';        actions = @{ deploy = 'Ready'; move = 'Yes'; attack = 'Fire'; death = 'Death' } }
     # Tassadar's Gantrithor (Archon) lines are never used: the card is the High Templar one.
     @{ unit = 'protoss/tassadar'; prefix = 'ProtossTassadarHighTemplar'; actions = @{ move = 'Yes'; death = 'Death' } }
 )
@@ -60,6 +63,9 @@ $heroDeployMap = @(
        files = @('ZergDefilerPlague00SC1.ogg') }
     @{ unit = 'zerg/defiler'; action = 'dark_swarm'
        files = @('ZergDefilerPlague01SC1.ogg') }                                  # placeholder borrowed from Plague
+    # Firebat Stimpack: SC1 reuses the Marine's clip ("(injection sound) Ah! That's the stuff!" / "Ah yeah!").
+    @{ unit = 'terran/firebat'; action = 'stimpackVO'
+       files = @('TerranMarineStimPack00SC1.ogg', 'TerranMarineStimPack01SC1.ogg') }
     # Tassadar has no "Ready" line either: all four "Selected" quotes plus two chained "Pissed" pairs.
     @{ unit = 'protoss/tassadar'; action = 'deploy'
        files = @('ProtossTassadarHighTemplarWhat00SC1.ogg',                       # "Yes, Executor?"
