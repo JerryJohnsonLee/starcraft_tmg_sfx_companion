@@ -1968,7 +1968,11 @@ window.AUDIO_REGISTRY = {
                                                                                                                            "stimpack",
                                                                                                                            "stimpackVO"
                                                                                                                        ],
-                                                                                                     "playback":  "simultaneous",
+                                                                                                     "playback":  "sequential",
+                                                                                                     "overlap_sources":  [
+                                                                                                                             "stimpackVO"
+                                                                                                                         ],
+                                                                                                     "overlap_seconds":  0.5,
                                                                                                      "sc1_sound_sources":  [
                                                                                                                                "stimpackVO"
                                                                                                                            ]

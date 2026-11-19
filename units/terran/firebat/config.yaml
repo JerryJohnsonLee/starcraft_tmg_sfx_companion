@@ -21,11 +21,14 @@ regular_abilities:
   destroyed:
     sound_sources: [death]
 additional_abilities:
-  # SC2: the Marine's injection effect (stimpack/) with a Firebat line (stimpackVO/), like the Marauder.
+  # SC2: the Marine's injection effect (stimpack/), then a Firebat line (stimpackVO/) starting 0.5 seconds into it
+  # (the effect runs about 1.2 s, the lines 1.7-2.3 s), so the two overlap instead of starting together.
   # SC1: the Firebat uses the Marine's Stimpack clip (injection sound plus voice), so only that one plays.
   stimpack:
     sound_sources: [stimpack, stimpackVO]
-    playback: simultaneous
+    playback: sequential
+    overlap_sources: [stimpackVO]
+    overlap_seconds: 0.5
     sc1_sound_sources: [stimpackVO]
   # Fire Wall: the StarCraft I "building on fire" sounds (large or small, random), used on both banks.
   fire_wall:
