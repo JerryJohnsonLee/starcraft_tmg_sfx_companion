@@ -65,6 +65,18 @@ function Read-UnitConfig([string]$path) {
             $config[$section][$ability].sound_sources = $sources
             continue
         }
+        # Optional (sequential playback): the listed sources start `overlap_seconds` after the PREVIOUS clip started
+        # (or at its end, if that clip is shorter) instead of after it ended, so the sounds overlap.
+        if ($ability -and $line -match '^    overlap_sources:\s*\[(.*?)\]\s*$') {
+            $overlapSources = @()
+            if ($Matches[1].Trim()) { $overlapSources = @($Matches[1].Split(',') | ForEach-Object { $_.Trim() }) }
+            $config[$section][$ability].overlap_sources = $overlapSources
+            continue
+        }
+        if ($ability -and $line -match '^    overlap_seconds:\s*(\d+(?:\.\d+)?)\s*$') {
+            $config[$section][$ability].overlap_seconds = [double]::Parse($Matches[1], [System.Globalization.CultureInfo]::InvariantCulture)
+            continue
+        }
         # Optional: different sources when the card is switched to the SC1 bank (e.g. no SC2-only effect appended).
         if ($ability -and $line -match '^    sc1_sound_sources:\s*\[(.*?)\]\s*$') {
             $sc1Sources = @()
@@ -156,6 +168,23 @@ foreach ($race in $registry.unitConfigs.Keys) {
                 }
                 if ($sources.Count -gt 1 -and $registry.unitConfigs[$race][$unit][$section][$ability].playback -notin @('simultaneous', 'sequential')) {
                     throw "Ability '$ability' in units/$race/$unit/config.yaml needs playback: simultaneous or sequential because it has multiple sound sources."
+                }
+                # overlap_sources + overlap_seconds work together, only with sequential playback, on known sources.
+                $abilityConfig = $registry.unitConfigs[$race][$unit][$section][$ability]
+                $hasOverlapSources = $abilityConfig.Contains('overlap_sources')
+                $hasOverlapSeconds = $abilityConfig.Contains('overlap_seconds')
+                if ($hasOverlapSources -ne $hasOverlapSeconds) {
+                    throw "Ability '$ability' in units/$race/$unit/config.yaml needs both overlap_sources and overlap_seconds."
+                }
+                if ($hasOverlapSources) {
+                    if ($abilityConfig.playback -ne 'sequential') {
+                        throw "Ability '$ability' in units/$race/$unit/config.yaml uses overlap_sources, which needs playback: sequential."
+                    }
+                    foreach ($overlapSource in @($abilityConfig.overlap_sources)) {
+                        if ($overlapSource -notin $sources -or [array]::IndexOf($sources, $overlapSource) -eq 0) {
+                            throw "overlap_sources entry '$overlapSource' of ability '$ability' in units/$race/$unit/config.yaml must be a sound source that is not the first one."
+                        }
+                    }
                 }
             }
         }

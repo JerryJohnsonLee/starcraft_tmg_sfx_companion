@@ -158,7 +158,10 @@ window.AUDIO_REGISTRY = {
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact2.ogg?v=8640b145-26195",
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact3.ogg?v=036f65d9-26250",
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact4.ogg?v=f6746c65-25800"
-                                                                           ]
+                                                                           ],
+                                                       "psionic_stormLaunch":  [
+                                                                                   "units/protoss/high_templar/psionic_stormLaunch/hightemplar_psionicstormlaunch0.ogg?v=40869419-46320"
+                                                                               ]
                                                    },
                                   "immortal":  {
                                                    "attack":  [
@@ -1541,8 +1544,13 @@ window.AUDIO_REGISTRY = {
                                                                                                 },
                                                                                        "attack":  {
                                                                                                       "sound_sources":  [
-                                                                                                                            "attack"
-                                                                                                                        ]
+                                                                                                                            "attack",
+                                                                                                                            "psionic_stormFX"
+                                                                                                                        ],
+                                                                                                      "playback":  "sequential",
+                                                                                                      "sc1_sound_sources":  [
+                                                                                                                                "attack"
+                                                                                                                            ]
                                                                                                   },
                                                                                        "destroyed":  {
                                                                                                          "sound_sources":  [
@@ -1554,9 +1562,14 @@ window.AUDIO_REGISTRY = {
                                                                                           "psionic_storm":  {
                                                                                                                 "sound_sources":  [
                                                                                                                                       "psionic_storm",
-                                                                                                                                      "psionic_stormFX"
+                                                                                                                                      "psionic_stormFX",
+                                                                                                                                      "psionic_stormLaunch"
                                                                                                                                   ],
                                                                                                                 "playback":  "sequential",
+                                                                                                                "overlap_sources":  [
+                                                                                                                                        "psionic_stormLaunch"
+                                                                                                                                    ],
+                                                                                                                "overlap_seconds":  1,
                                                                                                                 "sc1_sound_sources":  [
                                                                                                                                           "psionic_storm"
                                                                                                                                       ]
