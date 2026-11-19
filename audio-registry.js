@@ -385,26 +385,65 @@ window.AUDIO_REGISTRY = {
                   "terran":  {
                                  "firebat":  {
                                                  "attack":  [
-                                                                "units/terran/firebat/sc1/attack/TerranFirebatFire00SC1.ogg?v=07d703b7-14814",
-                                                                "units/terran/firebat/sc1/attack/TerranFirebatFire01SC1.ogg?v=580e3583-14736"
+                                                                "units/terran/firebat/attack/Firebat_Attack00.ogg?v=5badbf4b-24613",
+                                                                "units/terran/firebat/attack/Firebat_Attack01.ogg?v=31972da1-31578",
+                                                                "units/terran/firebat/attack/Firebat_Attack02.ogg?v=bc723e68-39423",
+                                                                "units/terran/firebat/attack/Firebat_Attack03.ogg?v=20008c0f-34054",
+                                                                "units/terran/firebat/attack/Firebat_Attack04.ogg?v=7df551bd-27760",
+                                                                "units/terran/firebat/attack/Firebat_Attack05.ogg?v=461708e5-23985",
+                                                                "units/terran/firebat/attack/Firebat_Attack06.ogg?v=67ee1926-47811"
                                                             ],
+                                                 "attackFX":  [
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch0.ogg?v=f09e1074-19112",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch1.ogg?v=8d09cdb6-20766",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch2.ogg?v=cc4dfd91-19868",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch3.ogg?v=003829c8-20131",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch4.ogg?v=c788c820-20047"
+                                                              ],
                                                  "death":  [
-                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath00SC1.ogg?v=c131bb5d-13062",
-                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath01SC1.ogg?v=d2f401d6-15529",
-                                                               "units/terran/firebat/sc1/death/TerranFirebatDeath02SC1.ogg?v=26fabdba-15939"
+                                                               "units/terran/firebat/death/Firebat_Death00.ogg?v=ac470c12-43785",
+                                                               "units/terran/firebat/death/Firebat_Death01.ogg?v=2b3afed1-34621",
+                                                               "units/terran/firebat/death/Firebat_Death02.ogg?v=d227dadd-34322",
+                                                               "units/terran/firebat/death/Firebat_Death03.ogg?v=48911458-24817",
+                                                               "units/terran/firebat/death/Firebat_Death04.ogg?v=9293c3d7-24194",
+                                                               "units/terran/firebat/death/Firebat_Death05.ogg?v=2f3e3308-19503"
                                                            ],
                                                  "deploy":  [
-                                                                "units/terran/firebat/sc1/deploy/TerranFirebatReady00SC1.ogg?v=fbb6bafa-15012"
+                                                                "units/terran/firebat/deploy/Firebat_Ready00.ogg?v=aaf229f3-25728",
+                                                                "units/terran/firebat/deploy/Firebat_What00.ogg?v=91bf04d0-32530",
+                                                                "units/terran/firebat/deploy/Firebat_What01.ogg?v=f6cdfc2c-47092",
+                                                                "units/terran/firebat/deploy/Firebat_What02.ogg?v=9690ccd6-24589",
+                                                                "units/terran/firebat/deploy/Firebat_What03.ogg?v=5c1a9dcc-28075",
+                                                                "units/terran/firebat/deploy/Firebat_What04.ogg?v=4e55a539-22876",
+                                                                "units/terran/firebat/deploy/Firebat_What05.ogg?v=92232db7-25577"
                                                             ],
+                                                 "fire_wall":  [
+                                                                   "units/terran/firebat/fire_wall/onfirlrg.ogg?v=0a958cba-16599",
+                                                                   "units/terran/firebat/fire_wall/onfirsml.ogg?v=2ca0dc56-17532"
+                                                               ],
                                                  "move":  [
-                                                              "units/terran/firebat/sc1/move/TerranFirebatYes00SC1.ogg?v=d274ed65-11396",
-                                                              "units/terran/firebat/sc1/move/TerranFirebatYes01SC1.ogg?v=3d949a48-11427",
-                                                              "units/terran/firebat/sc1/move/TerranFirebatYes02SC1.ogg?v=40e48bf1-14821",
-                                                              "units/terran/firebat/sc1/move/TerranFirebatYes03SC1.ogg?v=1f10093a-16474"
+                                                              "units/terran/firebat/move/Firebat_Yes00.ogg?v=85e82820-46036",
+                                                              "units/terran/firebat/move/Firebat_Yes01.ogg?v=a045b48c-25316",
+                                                              "units/terran/firebat/move/Firebat_Yes02.ogg?v=19a3660c-29133",
+                                                              "units/terran/firebat/move/Firebat_Yes03.ogg?v=4c5cd45e-25034",
+                                                              "units/terran/firebat/move/Firebat_Yes04.ogg?v=27964143-27167",
+                                                              "units/terran/firebat/move/Firebat_Yes05.ogg?v=4fde6186-50637",
+                                                              "units/terran/firebat/move/Firebat_Yes06.ogg?v=cacf4741-50262"
                                                           ],
+                                                 "stimpack":  [
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack0.ogg?v=2cf7d6f9-14840",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack1.ogg?v=696ca01f-12793",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack2.ogg?v=e7f509ea-15841",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack3.ogg?v=d3b9aaaf-15424",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack4.ogg?v=bdb3bc35-14497",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack5.ogg?v=d21a3cbc-16075",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack6.ogg?v=656780b3-14543",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack7.ogg?v=c872f6b0-14994"
+                                                              ],
                                                  "stimpackVO":  [
-                                                                    "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack00SC1.ogg?v=8fb44c82-17831",
-                                                                    "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack01SC1.ogg?v=4ffb8690-15270"
+                                                                    "units/terran/firebat/stimpackVO/Firebat_Attack04.ogg?v=7df551bd-27760",
+                                                                    "units/terran/firebat/stimpackVO/Firebat_What04.ogg?v=4e55a539-22876",
+                                                                    "units/terran/firebat/stimpackVO/Firebat_Yes02.ogg?v=19a3660c-29133"
                                                                 ]
                                              },
                                  "goliath":  {
@@ -1310,6 +1349,30 @@ window.AUDIO_REGISTRY = {
                                                  }
                                  },
                      "terran":  {
+                                    "firebat":  {
+                                                    "attack":  [
+                                                                   "units/terran/firebat/sc1/attack/TerranFirebatFire00SC1.ogg?v=07d703b7-14814",
+                                                                   "units/terran/firebat/sc1/attack/TerranFirebatFire01SC1.ogg?v=580e3583-14736"
+                                                               ],
+                                                    "death":  [
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath00SC1.ogg?v=c131bb5d-13062",
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath01SC1.ogg?v=d2f401d6-15529",
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath02SC1.ogg?v=26fabdba-15939"
+                                                              ],
+                                                    "deploy":  [
+                                                                   "units/terran/firebat/sc1/deploy/TerranFirebatReady00SC1.ogg?v=fbb6bafa-15012"
+                                                               ],
+                                                    "move":  [
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes00SC1.ogg?v=d274ed65-11396",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes01SC1.ogg?v=3d949a48-11427",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes02SC1.ogg?v=40e48bf1-14821",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes03SC1.ogg?v=1f10093a-16474"
+                                                             ],
+                                                    "stimpackVO":  [
+                                                                       "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack00SC1.ogg?v=8fb44c82-17831",
+                                                                       "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack01SC1.ogg?v=4ffb8690-15270"
+                                                                   ]
+                                                },
                                     "goliath":  {
                                                     "attack":  [
                                                                    "units/terran/goliath/sc1/attack/tgofir00.ogg?v=7d176ca0-12081"
@@ -1866,8 +1929,7 @@ window.AUDIO_REGISTRY = {
                                                        "unit":  {
                                                                     "name":  "Firebat",
                                                                     "role":  "Core, Damage Dealer",
-                                                                    "weapon":  "Flamethrowers",
-                                                                    "audio_source":  "sc1"
+                                                                    "weapon":  "Flamethrowers"
                                                                 },
                                                        "regular_abilities":  {
                                                                                  "deploy":  {
@@ -1882,8 +1944,17 @@ window.AUDIO_REGISTRY = {
                                                                                           },
                                                                                  "attack":  {
                                                                                                 "sound_sources":  [
-                                                                                                                      "attack"
-                                                                                                                  ]
+                                                                                                                      "attack",
+                                                                                                                      "attackFX"
+                                                                                                                  ],
+                                                                                                "playback":  "sequential",
+                                                                                                "overlap_sources":  [
+                                                                                                                        "attackFX"
+                                                                                                                    ],
+                                                                                                "overlap_seconds":  1,
+                                                                                                "sc1_sound_sources":  [
+                                                                                                                          "attack"
+                                                                                                                      ]
                                                                                             },
                                                                                  "destroyed":  {
                                                                                                    "sound_sources":  [
@@ -1894,9 +1965,19 @@ window.AUDIO_REGISTRY = {
                                                        "additional_abilities":  {
                                                                                     "stimpack":  {
                                                                                                      "sound_sources":  [
+                                                                                                                           "stimpack",
                                                                                                                            "stimpackVO"
-                                                                                                                       ]
-                                                                                                 }
+                                                                                                                       ],
+                                                                                                     "playback":  "simultaneous",
+                                                                                                     "sc1_sound_sources":  [
+                                                                                                                               "stimpackVO"
+                                                                                                                           ]
+                                                                                                 },
+                                                                                    "fire_wall":  {
+                                                                                                      "sound_sources":  [
+                                                                                                                            "fire_wall"
+                                                                                                                        ]
+                                                                                                  }
                                                                                 }
                                                    },
                                        "goliath":  {

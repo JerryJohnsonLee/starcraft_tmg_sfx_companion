@@ -66,6 +66,13 @@ $importMap = @(
     @{ target = 'zerg/zagara/move';    patterns = @("$zergHeroVoice\zagarahero_yes??.ogg") }
     @{ target = 'zerg/zagara/attack';  patterns = @("$zergHeroVoice\zagarahero_attack??.ogg") }
     @{ target = 'zerg/zagara/death';   patterns = @("$zergHeroVoice\zagarahero_death??.wav") }
+
+    # --- Terran Firebat (TMG wave 4) ---
+    # The StarCraft II voice lines come from the wiki (fetch-sc1-sounds.ps1, Phase A3). Not imported from the game,
+    # copied from existing repo files instead: stimpack/ <- units/terran/marine/stimpack/Marine_Stimpack0-7.ogg (injection effect).
+    @{ target = 'terran/firebat/attackFX'; patterns = @('*\mods\liberty.sc2mod\base.sc2assets\assets\sounds\terran\firebat\firebat_attacklaunch?.wav') }  # flamethrower burst, played with the voice
+    # Fire Wall: the StarCraft I "building on fire" sounds (staged by hand in tmp_assets\SC1), used on both banks, picked at random.
+    @{ target = 'terran/firebat/fire_wall'; patterns = @('*\SC1\bldg\onfirlrg.wav', '*\SC1\sounds\onfirsml.wav') }
 )
 
 # --- Terran Nova (TMG wave 3) ---

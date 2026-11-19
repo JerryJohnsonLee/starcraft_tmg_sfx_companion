@@ -1,6 +1,7 @@
 # Downloads StarCraft I unit audio into units/<race>/<unit>/sc1/<action>/.
 #
 # Phase A: voice lines from the StarCraft Wiki (already OGG Vorbis).
+# Phase A3: StarCraft II voice lines from the wiki, saved in the regular (StarCraft II) action folders.
 # Phase B: weapon fire/impact FX from The Sounds Resource "Weapons" pack (WAV), plus a few other SC1 effects.
 #          The pack download is blocked by Cloudflare for scripts, so WAVs staged by hand under
 #          tmp_assets/SC1/ (any subfolder, matched by file name) are used first; the download is the fallback.
@@ -135,7 +136,8 @@ function Get-WikiFileUrls([string[]]$fileNames) {
         $titles = ($batch | ForEach-Object { "File:$_" }) -join '|'
         $response = Invoke-WikiQuery @{ prop = 'imageinfo'; iiprop = 'url'; titles = $titles }
         foreach ($page in $response.query.pages.PSObject.Properties.Value) {
-            if ($page.imageinfo) { $urls[$page.title -replace '^File:', ''] = $page.imageinfo[0].url }
+            # The API returns titles with spaces, while the file names use underscores.
+            if ($page.imageinfo) { $urls[($page.title -replace '^File:', '') -replace ' ', '_'] = $page.imageinfo[0].url }
         }
     }
     return $urls
@@ -213,6 +215,35 @@ foreach ($entry in $heroDeployMap) {
             }
         } finally {
             Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
+# Phase A3 mapping: StarCraft II voice lines from the wiki ("<Prefix>_<Kind><digits>.ogg"), saved in the regular action
+# folders (the StarCraft II bank), not under sc1/. Each action maps to a regex over the wiki file names.
+$sc2VoiceMap = @(
+    @{ unit = 'terran/firebat'; prefix = 'Firebat_'; actions = [ordered]@{
+        deploy     = '^Firebat_(Ready|What)\d+\.ogg$'
+        move       = '^Firebat_Yes\d+\.ogg$'
+        attack     = '^Firebat_Attack\d+\.ogg$'
+        death      = '^Firebat_Death\d+\.ogg$'
+        stimpackVO = '^Firebat_(What04|Attack04|Yes02)\.ogg$'     # "Fueled up!", "Fired up.", "Smokin'!"
+    } }
+)
+
+Write-Host '== Phase A3: StarCraft II wiki voice lines =='
+foreach ($entry in $sc2VoiceMap) {
+    Write-Host "[$($entry.unit)]"
+    $allNames = @(Get-WikiFileNames $entry.prefix)
+    foreach ($action in $entry.actions.Keys) {
+        $names = @($allNames | Where-Object { $_ -match $entry.actions[$action] })
+        if ($names.Count -eq 0) { Write-Warning "No wiki files for $($entry.prefix) $action"; continue }
+        $urls = Get-WikiFileUrls $names
+        $dir = Join-Path $unitsRoot (Join-Path $entry.unit $action)
+        if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+        foreach ($name in $names) {
+            if (-not $urls.ContainsKey($name)) { $stats.failed++; Write-Warning "No URL for $name"; continue }
+            Save-File $urls[$name] (Join-Path $dir $name) { param($p) Test-OggFile $p }
         }
     }
 }
