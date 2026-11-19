@@ -3,6 +3,7 @@
 // One line per merged change, newest first: add the new entry at the TOP when a pull request is merged.
 // Keep titles short and written for players, not for developers.
 window.CHANGELOG = [
+    { date: '2026-11-18', title: 'StarCraft I: Tassadar has an attack sound, Zerg burrow and unburrow use the original sounds, and the High Templar storm starts over a random Yes line' },
     { date: '2026-11-18', title: 'High Templar: Psionic Storm ends with the storm launch sound, overlapping the impact, and Attack now has a storm impact effect (StarCraft II)' },
     { date: '2026-10-24', title: 'Offline: music can be saved without any faction; sounds that are not saved are dimmed with a notice when you are offline' },
     { date: '2026-10-24', title: 'Offline Settings: a collapsible card that shows how much each download or removal will use or free' },

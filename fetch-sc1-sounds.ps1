@@ -1,7 +1,9 @@
 # Downloads StarCraft I unit audio into units/<race>/<unit>/sc1/<action>/.
 #
 # Phase A: voice lines from the StarCraft Wiki (already OGG Vorbis).
-# Phase B: weapon fire/impact FX from The Sounds Resource "Weapons" pack (WAV).
+# Phase B: weapon fire/impact FX from The Sounds Resource "Weapons" pack (WAV), plus a few other SC1 effects.
+#          The pack download is blocked by Cloudflare for scripts, so WAVs staged by hand under
+#          tmp_assets/SC1/ (any subfolder, matched by file name) are used first; the download is the fallback.
 #          Run `python convert-to-ogg.py` afterwards to transcode the WAVs.
 #
 # The script is idempotent: files that already exist are skipped.
@@ -83,6 +85,10 @@ $weaponMap = @{
     'ukifir00' = @('zerg/kerrigan/attack')
     'psiblade' = @('protoss/zealot/combat')
     'uzefir00' = @('protoss/zeratul/attack')
+    'psahit00' = @('protoss/tassadar/attack')   # Psi Assault (P-S-A hit); chosen by file code, not auditioned
+    # Burrow/unburrow (from the staged "sounds" bank, not part of the Weapons zip). Defiler: SC1-only unit.
+    'burrowdn' = @('zerg/hydralisk/burrow', 'zerg/zergling/burrow', 'zerg/kerrigan/burrow', 'zerg/defiler/burrow')
+    'burrowup' = @('zerg/hydralisk/unburrow', 'zerg/zergling/unburrow', 'zerg/kerrigan/unburrow', 'zerg/defiler/unburrow')
 }
 
 $stats = @{ downloaded = 0; skipped = 0; failed = 0 }
@@ -223,11 +229,19 @@ if ($pendingWeapons.Count -eq 0) {
     $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) "sc1-weapons-$([guid]::NewGuid().ToString('N'))"
     New-Item -ItemType Directory -Path $tempDir | Out-Null
     try {
-        $zipPath = Join-Path $tempDir 'weapons.zip'
-        Write-Host "  Downloading $weaponsZipUrl"
-        Invoke-WebRequest -Uri $weaponsZipUrl -OutFile $zipPath -Headers @{ 'User-Agent' = $userAgent } -UseBasicParsing
-        Expand-Archive -LiteralPath $zipPath -DestinationPath $tempDir -Force
-        $extracted = Get-ChildItem -LiteralPath $tempDir -Recurse -File -Filter '*.wav'
+        $stagingDir = Join-Path $rootPath 'tmp_assets\SC1'
+        $stagedFiles = @()
+        if (Test-Path -LiteralPath $stagingDir) { $stagedFiles = @(Get-ChildItem -LiteralPath $stagingDir -Recurse -File -Filter '*.wav') }
+        if ($stagedFiles.Count -gt 0) {
+            Write-Host "  Using $($stagedFiles.Count) staged WAV files from tmp_assets\SC1"
+            $extracted = $stagedFiles
+        } else {
+            $zipPath = Join-Path $tempDir 'weapons.zip'
+            Write-Host "  Downloading $weaponsZipUrl"
+            Invoke-WebRequest -Uri $weaponsZipUrl -OutFile $zipPath -Headers @{ 'User-Agent' = $userAgent } -UseBasicParsing
+            Expand-Archive -LiteralPath $zipPath -DestinationPath $tempDir -Force
+            $extracted = Get-ChildItem -LiteralPath $tempDir -Recurse -File -Filter '*.wav'
+        }
         foreach ($dest in $pendingWeapons.Keys) {
             $code = $pendingWeapons[$dest]
             $source = $extracted | Where-Object { $_.BaseName -ieq $code } | Select-Object -First 1

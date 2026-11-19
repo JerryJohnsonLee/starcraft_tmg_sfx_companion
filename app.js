@@ -414,7 +414,8 @@ function playConfiguredAbility(ability, unitAudio, cardElement, bank) {
     if (ability.playback === 'sequential') {
         // Sources listed in `overlap_sources` start `overlap_seconds` after the previous clip started (or when it
         // ends, if it is shorter) instead of after it ended.
-        const overlapSources = new Set(ability.overlap_sources || []);
+        const overlapList = (bank === 'sc1' && ability.sc1_overlap_sources) ? ability.sc1_overlap_sources : (ability.overlap_sources || []);
+        const overlapSources = new Set(overlapList);
         const overlapSeconds = Number(ability.overlap_seconds || 0);
 
         const playNext = index => {

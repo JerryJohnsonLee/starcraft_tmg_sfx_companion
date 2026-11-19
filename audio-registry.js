@@ -286,6 +286,9 @@ window.AUDIO_REGISTRY = {
                                                             ]
                                               },
                                   "tassadar":  {
+                                                   "attack":  [
+                                                                  "units/protoss/tassadar/sc1/attack/psahit00.ogg?v=1331b5d4-10364"
+                                                              ],
                                                    "death":  [
                                                                  "units/protoss/tassadar/sc1/death/ProtossTassadarHighTemplarDeath00SC1.ogg?v=36f736e9-20465"
                                                              ],
@@ -810,17 +813,15 @@ window.AUDIO_REGISTRY = {
                              },
                   "zerg":  {
                                "defiler":  {
-                                               "burrow":  [
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall0.ogg?v=6c6d6649-21856",
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall1.ogg?v=5abed9de-17499",
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall2.ogg?v=37db321b-19212"
-                                                          ],
                                                "combat":  [
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee0.ogg?v=c5234870-8277",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee1.ogg?v=7d7fd077-9371",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee2.ogg?v=1b566f54-9523",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee3.ogg?v=acb44ade-10001",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee4.ogg?v=add8a710-10156"
+                                                          ],
+                                               "burrow":  [
+                                                              "units/zerg/defiler/sc1/burrow/burrowdn.ogg?v=f44f9af6-8624"
                                                           ],
                                                "combatVO":  [
                                                                 "units/zerg/defiler/sc1/combatVO/ZergDefilerPissed00SC1.ogg?v=c3af45e6-16187",
@@ -854,9 +855,7 @@ window.AUDIO_REGISTRY = {
                                                               "units/zerg/defiler/sc1/plague/ZergDefilerPlague00SC1.ogg?v=d2a2c45a-32610"
                                                           ],
                                                "unburrow":  [
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall0.ogg?v=889945f2-29856",
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall1.ogg?v=fb27bfeb-27074",
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall2.ogg?v=20aaff48-30647"
+                                                                "units/zerg/defiler/sc1/unburrow/burrowup.ogg?v=d8e7983f-11628"
                                                             ]
                                            },
                                "hydralisk":  {
@@ -1402,6 +1401,9 @@ window.AUDIO_REGISTRY = {
                                                     "attack":  [
                                                                    "units/zerg/hydralisk/sc1/attack/zhyfir00.ogg?v=314e1419-8507"
                                                                ],
+                                                    "burrow":  [
+                                                                   "units/zerg/hydralisk/sc1/burrow/burrowdn.ogg?v=160184d4-8624"
+                                                               ],
                                                     "death":  [
                                                                   "units/zerg/hydralisk/sc1/death/ZergHydraliskDeath00SC1.ogg?v=0bc5d979-12430"
                                                               ],
@@ -1413,11 +1415,17 @@ window.AUDIO_REGISTRY = {
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes01SC1.ogg?v=b6fc60ef-14338",
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes02SC1.ogg?v=026c7a01-12958",
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes03SC1.ogg?v=327fb12c-12178"
-                                                             ]
+                                                             ],
+                                                    "unburrow":  [
+                                                                     "units/zerg/hydralisk/sc1/unburrow/burrowup.ogg?v=960d232d-11628"
+                                                                 ]
                                                 },
                                   "kerrigan":  {
                                                    "attack":  [
                                                                   "units/zerg/kerrigan/sc1/attack/ukifir00.ogg?v=63867e05-12699"
+                                                              ],
+                                                   "burrow":  [
+                                                                  "units/zerg/kerrigan/sc1/burrow/burrowdn.ogg?v=96785d4b-8624"
                                                               ],
                                                    "death":  [
                                                                  "units/zerg/kerrigan/sc1/death/ZergInfestedKerriganDeath00SC1.ogg?v=ddbdad39-23282"
@@ -1431,9 +1439,15 @@ window.AUDIO_REGISTRY = {
                                                    "ready":  [
                                                                  "units/zerg/kerrigan/sc1/ready/ZergInfestedKerriganPissed00SC1.ogg?v=b78f8d73-23954",
                                                                  "units/zerg/kerrigan/sc1/ready/ZergInfestedKerriganWhat01SC1.ogg?v=739dd10b-12542"
-                                                             ]
+                                                             ],
+                                                   "unburrow":  [
+                                                                    "units/zerg/kerrigan/sc1/unburrow/burrowup.ogg?v=016da866-11628"
+                                                                ]
                                                },
                                   "zergling":  {
+                                                   "burrow":  [
+                                                                  "units/zerg/zergling/sc1/burrow/burrowdn.ogg?v=44c60616-8624"
+                                                              ],
                                                    "death":  [
                                                                  "units/zerg/zergling/sc1/death/ZergZerglingDeath00SC1.ogg?v=2db59766-11213"
                                                              ],
@@ -1445,7 +1459,10 @@ window.AUDIO_REGISTRY = {
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes01SC1.ogg?v=4b9dfdde-11805",
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes02SC1.ogg?v=37857701-12799",
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes03SC1.ogg?v=56eebae8-10013"
-                                                            ]
+                                                            ],
+                                                   "unburrow":  [
+                                                                    "units/zerg/zergling/sc1/unburrow/burrowup.ogg?v=45598758-11628"
+                                                                ]
                                                }
                               }
                  },
@@ -1571,8 +1588,12 @@ window.AUDIO_REGISTRY = {
                                                                                                                                     ],
                                                                                                                 "overlap_seconds":  1,
                                                                                                                 "sc1_sound_sources":  [
+                                                                                                                                          "move",
                                                                                                                                           "psionic_storm"
-                                                                                                                                      ]
+                                                                                                                                      ],
+                                                                                                                "sc1_overlap_sources":  [
+                                                                                                                                            "psionic_storm"
+                                                                                                                                        ]
                                                                                                             }
                                                                                       }
                                                          },
@@ -1726,6 +1747,11 @@ window.AUDIO_REGISTRY = {
                                                                                                                       "move"
                                                                                                                   ]
                                                                                             },
+                                                                                   "attack":  {
+                                                                                                  "sound_sources":  [
+                                                                                                                        "attack"
+                                                                                                                    ]
+                                                                                              },
                                                                                    "destroyed":  {
                                                                                                      "sound_sources":  [
                                                                                                                            "death"

@@ -23,4 +23,6 @@ additional_abilities:
     playback: sequential
     overlap_sources: [psionic_stormLaunch]
     overlap_seconds: 1
-    sc1_sound_sources: [psionic_storm]
+    # SC1: a random Yes line (the move quotes), with the storm sound starting 1 second into it.
+    sc1_sound_sources: [move, psionic_storm]
+    sc1_overlap_sources: [psionic_storm]

@@ -73,6 +73,13 @@ function Read-UnitConfig([string]$path) {
             $config[$section][$ability].overlap_sources = $overlapSources
             continue
         }
+        # Optional: the same list for the SC1 bank (its sources can differ), sharing `overlap_seconds`.
+        if ($ability -and $line -match '^    sc1_overlap_sources:\s*\[(.*?)\]\s*$') {
+            $sc1OverlapSources = @()
+            if ($Matches[1].Trim()) { $sc1OverlapSources = @($Matches[1].Split(',') | ForEach-Object { $_.Trim() }) }
+            $config[$section][$ability].sc1_overlap_sources = $sc1OverlapSources
+            continue
+        }
         if ($ability -and $line -match '^    overlap_seconds:\s*(\d+(?:\.\d+)?)\s*$') {
             $config[$section][$ability].overlap_seconds = [double]::Parse($Matches[1], [System.Globalization.CultureInfo]::InvariantCulture)
             continue
@@ -172,14 +179,17 @@ foreach ($race in $registry.unitConfigs.Keys) {
                 # overlap_sources + overlap_seconds work together, only with sequential playback, on known sources.
                 $abilityConfig = $registry.unitConfigs[$race][$unit][$section][$ability]
                 $hasOverlapSources = $abilityConfig.Contains('overlap_sources')
+                $hasSc1OverlapSources = $abilityConfig.Contains('sc1_overlap_sources')
                 $hasOverlapSeconds = $abilityConfig.Contains('overlap_seconds')
-                if ($hasOverlapSources -ne $hasOverlapSeconds) {
-                    throw "Ability '$ability' in units/$race/$unit/config.yaml needs both overlap_sources and overlap_seconds."
+                if (($hasOverlapSources -or $hasSc1OverlapSources) -ne $hasOverlapSeconds) {
+                    throw "Ability '$ability' in units/$race/$unit/config.yaml needs overlap_seconds together with overlap_sources (or sc1_overlap_sources)."
+                }
+                if ($hasOverlapSeconds) {
+                    if ($abilityConfig.playback -ne 'sequential') {
+                        throw "Ability '$ability' in units/$race/$unit/config.yaml uses overlap_seconds, which needs playback: sequential."
+                    }
                 }
                 if ($hasOverlapSources) {
-                    if ($abilityConfig.playback -ne 'sequential') {
-                        throw "Ability '$ability' in units/$race/$unit/config.yaml uses overlap_sources, which needs playback: sequential."
-                    }
                     foreach ($overlapSource in @($abilityConfig.overlap_sources)) {
                         if ($overlapSource -notin $sources -or [array]::IndexOf($sources, $overlapSource) -eq 0) {
                             throw "overlap_sources entry '$overlapSource' of ability '$ability' in units/$race/$unit/config.yaml must be a sound source that is not the first one."
@@ -197,6 +207,15 @@ foreach ($race in $registry.unitConfigs.Keys) {
         foreach ($section in @('regular_abilities', 'additional_abilities')) {
             foreach ($ability in $registry.unitConfigs[$race][$unit][$section].Keys) {
                 $abilityConfig = $registry.unitConfigs[$race][$unit][$section][$ability]
+                # sc1_overlap_sources must name sources the SC1 bank actually plays (its override, or the regular list), never the first.
+                if ($abilityConfig.Contains('sc1_overlap_sources')) {
+                    $effectiveSc1Sources = if ($abilityConfig.Contains('sc1_sound_sources')) { @($abilityConfig.sc1_sound_sources) } else { @($abilityConfig.sound_sources) }
+                    foreach ($overlapSource in @($abilityConfig.sc1_overlap_sources)) {
+                        if ($overlapSource -notin $effectiveSc1Sources -or [array]::IndexOf($effectiveSc1Sources, $overlapSource) -eq 0) {
+                            throw "sc1_overlap_sources entry '$overlapSource' of ability '$ability' in units/$race/$unit/config.yaml must be an SC1 sound source that is not the first one."
+                        }
+                    }
+                }
                 if (-not $abilityConfig.Contains('sc1_sound_sources')) { continue }
                 $sc1Sources = @($abilityConfig.sc1_sound_sources)
                 if ($sc1Sources.Count -eq 0) { throw "Ability '$ability' has an empty sc1_sound_sources in units/$race/$unit/config.yaml" }

@@ -16,7 +16,7 @@ regular_abilities:
   destroyed:
     sound_sources: [death]
 additional_abilities:
-  # Burrow Ambush: same burrow sounds as the Hydralisk (SC2 files in units/zerg/defiler/burrow and unburrow).
+  # Burrow Ambush: the StarCraft I burrow sounds (burrowdn / burrowup), same as the Hydralisk's SC1 bank.
   burrow:
     button_size: 1
     sound_sources: [burrow]

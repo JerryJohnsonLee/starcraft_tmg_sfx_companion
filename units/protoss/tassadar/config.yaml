@@ -8,8 +8,10 @@ regular_abilities:
     sound_sources: [deploy]
   move:
     sound_sources: [move]
-  # TODO attack (Resonance Beam / Strike): no sound source yet. Add it here as:
-  #   attack: sound_sources: [attack]  (and create the folder with audio under sc1/).
+  # Psi Assault effect (psahit00, from The Sounds Resource weapons bank). The file name is the only hint it is the
+  # right one (P-S-A: Psi Assault, hit), so swap it if it does not sound right.
+  attack:
+    sound_sources: [attack]
   destroyed:
     sound_sources: [death]
 additional_abilities:
