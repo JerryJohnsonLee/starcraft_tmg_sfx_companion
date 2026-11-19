@@ -1,7 +1,10 @@
 # Downloads StarCraft I unit audio into units/<race>/<unit>/sc1/<action>/.
 #
 # Phase A: voice lines from the StarCraft Wiki (already OGG Vorbis).
-# Phase B: weapon fire/impact FX from The Sounds Resource "Weapons" pack (WAV).
+# Phase A3: StarCraft II voice lines from the wiki, saved in the regular (StarCraft II) action folders.
+# Phase B: weapon fire/impact FX from The Sounds Resource "Weapons" pack (WAV), plus a few other SC1 effects.
+#          The pack download is blocked by Cloudflare for scripts, so WAVs staged by hand under
+#          tmp_assets/SC1/ (any subfolder, matched by file name) are used first; the download is the fallback.
 #          Run `python convert-to-ogg.py` afterwards to transcode the WAVs.
 #
 # The script is idempotent: files that already exist are skipped.
@@ -29,6 +32,9 @@ $voiceMap = @(
     # SC1-only units (config `audio_source: sc1`): no SC2 audio exists, the sc1/ folders are their only bank.
     # Defiler Mound ("ZergDefilerMound*") lines are a building and never match the exact kinds below.
     @{ unit = 'zerg/defiler';    prefix = 'ZergDefiler';          actions = @{ deploy = @('Ready', 'What'); move = 'Yes'; death = 'Death'; combatVO = 'Pissed'; consume = 'Consume' } }   # Plague is curated in $heroDeployMap below
+    # Wave 4 Firebat: SC1 audio only until the SC2 (WoL) files are imported. "Fire" are two short flamethrower bursts
+    # (the SC1 attack sound); the Stimpack clip is the Marine's (curated below). The seven "Pissed" lines are not used.
+    @{ unit = 'terran/firebat';  prefix = 'TerranFirebat';        actions = @{ deploy = 'Ready'; move = 'Yes'; attack = 'Fire'; death = 'Death' } }
     # Tassadar's Gantrithor (Archon) lines are never used: the card is the High Templar one.
     @{ unit = 'protoss/tassadar'; prefix = 'ProtossTassadarHighTemplar'; actions = @{ move = 'Yes'; death = 'Death' } }
 )
@@ -58,6 +64,9 @@ $heroDeployMap = @(
        files = @('ZergDefilerPlague00SC1.ogg') }
     @{ unit = 'zerg/defiler'; action = 'dark_swarm'
        files = @('ZergDefilerPlague01SC1.ogg') }                                  # placeholder borrowed from Plague
+    # Firebat Stimpack: SC1 reuses the Marine's clip ("(injection sound) Ah! That's the stuff!" / "Ah yeah!").
+    @{ unit = 'terran/firebat'; action = 'stimpackVO'
+       files = @('TerranMarineStimPack00SC1.ogg', 'TerranMarineStimPack01SC1.ogg') }
     # Tassadar has no "Ready" line either: all four "Selected" quotes plus two chained "Pissed" pairs.
     @{ unit = 'protoss/tassadar'; action = 'deploy'
        files = @('ProtossTassadarHighTemplarWhat00SC1.ogg',                       # "Yes, Executor?"
@@ -83,6 +92,10 @@ $weaponMap = @{
     'ukifir00' = @('zerg/kerrigan/attack')
     'psiblade' = @('protoss/zealot/combat')
     'uzefir00' = @('protoss/zeratul/attack')
+    'psahit00' = @('protoss/tassadar/attack')   # Psi Assault (P-S-A hit); chosen by file code, not auditioned
+    # Burrow/unburrow (from the staged "sounds" bank, not part of the Weapons zip). Defiler: SC1-only unit.
+    'burrowdn' = @('zerg/hydralisk/burrow', 'zerg/zergling/burrow', 'zerg/kerrigan/burrow', 'zerg/defiler/burrow')
+    'burrowup' = @('zerg/hydralisk/unburrow', 'zerg/zergling/unburrow', 'zerg/kerrigan/unburrow', 'zerg/defiler/unburrow')
 }
 
 $stats = @{ downloaded = 0; skipped = 0; failed = 0 }
@@ -123,7 +136,8 @@ function Get-WikiFileUrls([string[]]$fileNames) {
         $titles = ($batch | ForEach-Object { "File:$_" }) -join '|'
         $response = Invoke-WikiQuery @{ prop = 'imageinfo'; iiprop = 'url'; titles = $titles }
         foreach ($page in $response.query.pages.PSObject.Properties.Value) {
-            if ($page.imageinfo) { $urls[$page.title -replace '^File:', ''] = $page.imageinfo[0].url }
+            # The API returns titles with spaces, while the file names use underscores.
+            if ($page.imageinfo) { $urls[($page.title -replace '^File:', '') -replace ' ', '_'] = $page.imageinfo[0].url }
         }
     }
     return $urls
@@ -205,6 +219,35 @@ foreach ($entry in $heroDeployMap) {
     }
 }
 
+# Phase A3 mapping: StarCraft II voice lines from the wiki ("<Prefix>_<Kind><digits>.ogg"), saved in the regular action
+# folders (the StarCraft II bank), not under sc1/. Each action maps to a regex over the wiki file names.
+$sc2VoiceMap = @(
+    @{ unit = 'terran/firebat'; prefix = 'Firebat_'; actions = [ordered]@{
+        deploy     = '^Firebat_(Ready|What)\d+\.ogg$'
+        move       = '^Firebat_Yes\d+\.ogg$'
+        attack     = '^Firebat_Attack\d+\.ogg$'
+        death      = '^Firebat_Death\d+\.ogg$'
+        stimpackVO = '^Firebat_(What04|Attack04|Yes02)\.ogg$'     # "Fueled up!", "Fired up.", "Smokin'!"
+    } }
+)
+
+Write-Host '== Phase A3: StarCraft II wiki voice lines =='
+foreach ($entry in $sc2VoiceMap) {
+    Write-Host "[$($entry.unit)]"
+    $allNames = @(Get-WikiFileNames $entry.prefix)
+    foreach ($action in $entry.actions.Keys) {
+        $names = @($allNames | Where-Object { $_ -match $entry.actions[$action] })
+        if ($names.Count -eq 0) { Write-Warning "No wiki files for $($entry.prefix) $action"; continue }
+        $urls = Get-WikiFileUrls $names
+        $dir = Join-Path $unitsRoot (Join-Path $entry.unit $action)
+        if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+        foreach ($name in $names) {
+            if (-not $urls.ContainsKey($name)) { $stats.failed++; Write-Warning "No URL for $name"; continue }
+            Save-File $urls[$name] (Join-Path $dir $name) { param($p) Test-OggFile $p }
+        }
+    }
+}
+
 Write-Host '== Phase B: The Sounds Resource weapon FX =='
 $pendingWeapons = @{}
 foreach ($code in $weaponMap.Keys) {
@@ -223,11 +266,19 @@ if ($pendingWeapons.Count -eq 0) {
     $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) "sc1-weapons-$([guid]::NewGuid().ToString('N'))"
     New-Item -ItemType Directory -Path $tempDir | Out-Null
     try {
-        $zipPath = Join-Path $tempDir 'weapons.zip'
-        Write-Host "  Downloading $weaponsZipUrl"
-        Invoke-WebRequest -Uri $weaponsZipUrl -OutFile $zipPath -Headers @{ 'User-Agent' = $userAgent } -UseBasicParsing
-        Expand-Archive -LiteralPath $zipPath -DestinationPath $tempDir -Force
-        $extracted = Get-ChildItem -LiteralPath $tempDir -Recurse -File -Filter '*.wav'
+        $stagingDir = Join-Path $rootPath 'tmp_assets\SC1'
+        $stagedFiles = @()
+        if (Test-Path -LiteralPath $stagingDir) { $stagedFiles = @(Get-ChildItem -LiteralPath $stagingDir -Recurse -File -Filter '*.wav') }
+        if ($stagedFiles.Count -gt 0) {
+            Write-Host "  Using $($stagedFiles.Count) staged WAV files from tmp_assets\SC1"
+            $extracted = $stagedFiles
+        } else {
+            $zipPath = Join-Path $tempDir 'weapons.zip'
+            Write-Host "  Downloading $weaponsZipUrl"
+            Invoke-WebRequest -Uri $weaponsZipUrl -OutFile $zipPath -Headers @{ 'User-Agent' = $userAgent } -UseBasicParsing
+            Expand-Archive -LiteralPath $zipPath -DestinationPath $tempDir -Force
+            $extracted = Get-ChildItem -LiteralPath $tempDir -Recurse -File -Filter '*.wav'
+        }
         foreach ($dest in $pendingWeapons.Keys) {
             $code = $pendingWeapons[$dest]
             $source = $extracted | Where-Object { $_.BaseName -ieq $code } | Select-Object -First 1

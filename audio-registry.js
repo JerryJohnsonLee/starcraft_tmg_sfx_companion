@@ -158,7 +158,10 @@ window.AUDIO_REGISTRY = {
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact2.ogg?v=8640b145-26195",
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact3.ogg?v=036f65d9-26250",
                                                                                "units/protoss/high_templar/psionic_stormFX/hightemplar_psionicstormimpact4.ogg?v=f6746c65-25800"
-                                                                           ]
+                                                                           ],
+                                                       "psionic_stormLaunch":  [
+                                                                                   "units/protoss/high_templar/psionic_stormLaunch/hightemplar_psionicstormlaunch0.ogg?v=40869419-46320"
+                                                                               ]
                                                    },
                                   "immortal":  {
                                                    "attack":  [
@@ -283,6 +286,9 @@ window.AUDIO_REGISTRY = {
                                                             ]
                                               },
                                   "tassadar":  {
+                                                   "attack":  [
+                                                                  "units/protoss/tassadar/sc1/attack/psahit00.ogg?v=1331b5d4-10364"
+                                                              ],
                                                    "death":  [
                                                                  "units/protoss/tassadar/sc1/death/ProtossTassadarHighTemplarDeath00SC1.ogg?v=36f736e9-20465"
                                                              ],
@@ -377,6 +383,69 @@ window.AUDIO_REGISTRY = {
                                               }
                               },
                   "terran":  {
+                                 "firebat":  {
+                                                 "attack":  [
+                                                                "units/terran/firebat/attack/Firebat_Attack00.ogg?v=5badbf4b-24613",
+                                                                "units/terran/firebat/attack/Firebat_Attack01.ogg?v=31972da1-31578",
+                                                                "units/terran/firebat/attack/Firebat_Attack02.ogg?v=bc723e68-39423",
+                                                                "units/terran/firebat/attack/Firebat_Attack03.ogg?v=20008c0f-34054",
+                                                                "units/terran/firebat/attack/Firebat_Attack04.ogg?v=7df551bd-27760",
+                                                                "units/terran/firebat/attack/Firebat_Attack05.ogg?v=461708e5-23985",
+                                                                "units/terran/firebat/attack/Firebat_Attack06.ogg?v=67ee1926-47811"
+                                                            ],
+                                                 "attackFX":  [
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch0.ogg?v=f09e1074-19112",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch1.ogg?v=8d09cdb6-20766",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch2.ogg?v=cc4dfd91-19868",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch3.ogg?v=003829c8-20131",
+                                                                  "units/terran/firebat/attackFX/firebat_attacklaunch4.ogg?v=c788c820-20047"
+                                                              ],
+                                                 "death":  [
+                                                               "units/terran/firebat/death/Firebat_Death00.ogg?v=ac470c12-43785",
+                                                               "units/terran/firebat/death/Firebat_Death01.ogg?v=2b3afed1-34621",
+                                                               "units/terran/firebat/death/Firebat_Death02.ogg?v=d227dadd-34322",
+                                                               "units/terran/firebat/death/Firebat_Death03.ogg?v=48911458-24817",
+                                                               "units/terran/firebat/death/Firebat_Death04.ogg?v=9293c3d7-24194",
+                                                               "units/terran/firebat/death/Firebat_Death05.ogg?v=2f3e3308-19503"
+                                                           ],
+                                                 "deploy":  [
+                                                                "units/terran/firebat/deploy/Firebat_Ready00.ogg?v=aaf229f3-25728",
+                                                                "units/terran/firebat/deploy/Firebat_What00.ogg?v=91bf04d0-32530",
+                                                                "units/terran/firebat/deploy/Firebat_What01.ogg?v=f6cdfc2c-47092",
+                                                                "units/terran/firebat/deploy/Firebat_What02.ogg?v=9690ccd6-24589",
+                                                                "units/terran/firebat/deploy/Firebat_What03.ogg?v=5c1a9dcc-28075",
+                                                                "units/terran/firebat/deploy/Firebat_What04.ogg?v=4e55a539-22876",
+                                                                "units/terran/firebat/deploy/Firebat_What05.ogg?v=92232db7-25577"
+                                                            ],
+                                                 "fire_wall":  [
+                                                                   "units/terran/firebat/fire_wall/onfirlrg.ogg?v=0a958cba-16599",
+                                                                   "units/terran/firebat/fire_wall/onfirsml.ogg?v=2ca0dc56-17532"
+                                                               ],
+                                                 "move":  [
+                                                              "units/terran/firebat/move/Firebat_Yes00.ogg?v=85e82820-46036",
+                                                              "units/terran/firebat/move/Firebat_Yes01.ogg?v=a045b48c-25316",
+                                                              "units/terran/firebat/move/Firebat_Yes02.ogg?v=19a3660c-29133",
+                                                              "units/terran/firebat/move/Firebat_Yes03.ogg?v=4c5cd45e-25034",
+                                                              "units/terran/firebat/move/Firebat_Yes04.ogg?v=27964143-27167",
+                                                              "units/terran/firebat/move/Firebat_Yes05.ogg?v=4fde6186-50637",
+                                                              "units/terran/firebat/move/Firebat_Yes06.ogg?v=cacf4741-50262"
+                                                          ],
+                                                 "stimpack":  [
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack0.ogg?v=2cf7d6f9-14840",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack1.ogg?v=696ca01f-12793",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack2.ogg?v=e7f509ea-15841",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack3.ogg?v=d3b9aaaf-15424",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack4.ogg?v=bdb3bc35-14497",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack5.ogg?v=d21a3cbc-16075",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack6.ogg?v=656780b3-14543",
+                                                                  "units/terran/firebat/stimpack/Marine_Stimpack7.ogg?v=c872f6b0-14994"
+                                                              ],
+                                                 "stimpackVO":  [
+                                                                    "units/terran/firebat/stimpackVO/Firebat_Attack04.ogg?v=7df551bd-27760",
+                                                                    "units/terran/firebat/stimpackVO/Firebat_What04.ogg?v=4e55a539-22876",
+                                                                    "units/terran/firebat/stimpackVO/Firebat_Yes02.ogg?v=19a3660c-29133"
+                                                                ]
+                                             },
                                  "goliath":  {
                                                  "attack":  [
                                                                 "units/terran/goliath/attack/Goliath_GroundAttackLaunch0.ogg?v=319d1ce7-19028",
@@ -807,17 +876,15 @@ window.AUDIO_REGISTRY = {
                              },
                   "zerg":  {
                                "defiler":  {
-                                               "burrow":  [
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall0.ogg?v=6c6d6649-21856",
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall1.ogg?v=5abed9de-17499",
-                                                              "units/zerg/defiler/burrow/Zerg_BurrowSmall2.ogg?v=37db321b-19212"
-                                                          ],
                                                "combat":  [
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee0.ogg?v=c5234870-8277",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee1.ogg?v=7d7fd077-9371",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee2.ogg?v=1b566f54-9523",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee3.ogg?v=acb44ade-10001",
                                                               "units/zerg/defiler/combat/Roach_AttackLaunchMelee4.ogg?v=add8a710-10156"
+                                                          ],
+                                               "burrow":  [
+                                                              "units/zerg/defiler/sc1/burrow/burrowdn.ogg?v=f44f9af6-8624"
                                                           ],
                                                "combatVO":  [
                                                                 "units/zerg/defiler/sc1/combatVO/ZergDefilerPissed00SC1.ogg?v=c3af45e6-16187",
@@ -851,9 +918,7 @@ window.AUDIO_REGISTRY = {
                                                               "units/zerg/defiler/sc1/plague/ZergDefilerPlague00SC1.ogg?v=d2a2c45a-32610"
                                                           ],
                                                "unburrow":  [
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall0.ogg?v=889945f2-29856",
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall1.ogg?v=fb27bfeb-27074",
-                                                                "units/zerg/defiler/unburrow/Zerg_UnburrowSmall2.ogg?v=20aaff48-30647"
+                                                                "units/zerg/defiler/sc1/unburrow/burrowup.ogg?v=d8e7983f-11628"
                                                             ]
                                            },
                                "hydralisk":  {
@@ -1284,6 +1349,30 @@ window.AUDIO_REGISTRY = {
                                                  }
                                  },
                      "terran":  {
+                                    "firebat":  {
+                                                    "attack":  [
+                                                                   "units/terran/firebat/sc1/attack/TerranFirebatFire00SC1.ogg?v=07d703b7-14814",
+                                                                   "units/terran/firebat/sc1/attack/TerranFirebatFire01SC1.ogg?v=580e3583-14736"
+                                                               ],
+                                                    "death":  [
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath00SC1.ogg?v=c131bb5d-13062",
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath01SC1.ogg?v=d2f401d6-15529",
+                                                                  "units/terran/firebat/sc1/death/TerranFirebatDeath02SC1.ogg?v=26fabdba-15939"
+                                                              ],
+                                                    "deploy":  [
+                                                                   "units/terran/firebat/sc1/deploy/TerranFirebatReady00SC1.ogg?v=fbb6bafa-15012"
+                                                               ],
+                                                    "move":  [
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes00SC1.ogg?v=d274ed65-11396",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes01SC1.ogg?v=3d949a48-11427",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes02SC1.ogg?v=40e48bf1-14821",
+                                                                 "units/terran/firebat/sc1/move/TerranFirebatYes03SC1.ogg?v=1f10093a-16474"
+                                                             ],
+                                                    "stimpackVO":  [
+                                                                       "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack00SC1.ogg?v=8fb44c82-17831",
+                                                                       "units/terran/firebat/sc1/stimpackVO/TerranMarineStimPack01SC1.ogg?v=4ffb8690-15270"
+                                                                   ]
+                                                },
                                     "goliath":  {
                                                     "attack":  [
                                                                    "units/terran/goliath/sc1/attack/tgofir00.ogg?v=7d176ca0-12081"
@@ -1399,6 +1488,9 @@ window.AUDIO_REGISTRY = {
                                                     "attack":  [
                                                                    "units/zerg/hydralisk/sc1/attack/zhyfir00.ogg?v=314e1419-8507"
                                                                ],
+                                                    "burrow":  [
+                                                                   "units/zerg/hydralisk/sc1/burrow/burrowdn.ogg?v=160184d4-8624"
+                                                               ],
                                                     "death":  [
                                                                   "units/zerg/hydralisk/sc1/death/ZergHydraliskDeath00SC1.ogg?v=0bc5d979-12430"
                                                               ],
@@ -1410,11 +1502,17 @@ window.AUDIO_REGISTRY = {
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes01SC1.ogg?v=b6fc60ef-14338",
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes02SC1.ogg?v=026c7a01-12958",
                                                                  "units/zerg/hydralisk/sc1/move/ZergHydraliskYes03SC1.ogg?v=327fb12c-12178"
-                                                             ]
+                                                             ],
+                                                    "unburrow":  [
+                                                                     "units/zerg/hydralisk/sc1/unburrow/burrowup.ogg?v=960d232d-11628"
+                                                                 ]
                                                 },
                                   "kerrigan":  {
                                                    "attack":  [
                                                                   "units/zerg/kerrigan/sc1/attack/ukifir00.ogg?v=63867e05-12699"
+                                                              ],
+                                                   "burrow":  [
+                                                                  "units/zerg/kerrigan/sc1/burrow/burrowdn.ogg?v=96785d4b-8624"
                                                               ],
                                                    "death":  [
                                                                  "units/zerg/kerrigan/sc1/death/ZergInfestedKerriganDeath00SC1.ogg?v=ddbdad39-23282"
@@ -1428,9 +1526,15 @@ window.AUDIO_REGISTRY = {
                                                    "ready":  [
                                                                  "units/zerg/kerrigan/sc1/ready/ZergInfestedKerriganPissed00SC1.ogg?v=b78f8d73-23954",
                                                                  "units/zerg/kerrigan/sc1/ready/ZergInfestedKerriganWhat01SC1.ogg?v=739dd10b-12542"
-                                                             ]
+                                                             ],
+                                                   "unburrow":  [
+                                                                    "units/zerg/kerrigan/sc1/unburrow/burrowup.ogg?v=016da866-11628"
+                                                                ]
                                                },
                                   "zergling":  {
+                                                   "burrow":  [
+                                                                  "units/zerg/zergling/sc1/burrow/burrowdn.ogg?v=44c60616-8624"
+                                                              ],
                                                    "death":  [
                                                                  "units/zerg/zergling/sc1/death/ZergZerglingDeath00SC1.ogg?v=2db59766-11213"
                                                              ],
@@ -1442,7 +1546,10 @@ window.AUDIO_REGISTRY = {
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes01SC1.ogg?v=4b9dfdde-11805",
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes02SC1.ogg?v=37857701-12799",
                                                                 "units/zerg/zergling/sc1/move/ZergZerglingYes03SC1.ogg?v=56eebae8-10013"
-                                                            ]
+                                                            ],
+                                                   "unburrow":  [
+                                                                    "units/zerg/zergling/sc1/unburrow/burrowup.ogg?v=45598758-11628"
+                                                                ]
                                                }
                               }
                  },
@@ -1541,8 +1648,13 @@ window.AUDIO_REGISTRY = {
                                                                                                 },
                                                                                        "attack":  {
                                                                                                       "sound_sources":  [
-                                                                                                                            "attack"
-                                                                                                                        ]
+                                                                                                                            "attack",
+                                                                                                                            "psionic_stormFX"
+                                                                                                                        ],
+                                                                                                      "playback":  "sequential",
+                                                                                                      "sc1_sound_sources":  [
+                                                                                                                                "attack"
+                                                                                                                            ]
                                                                                                   },
                                                                                        "destroyed":  {
                                                                                                          "sound_sources":  [
@@ -1554,12 +1666,21 @@ window.AUDIO_REGISTRY = {
                                                                                           "psionic_storm":  {
                                                                                                                 "sound_sources":  [
                                                                                                                                       "psionic_storm",
-                                                                                                                                      "psionic_stormFX"
+                                                                                                                                      "psionic_stormFX",
+                                                                                                                                      "psionic_stormLaunch"
                                                                                                                                   ],
                                                                                                                 "playback":  "sequential",
+                                                                                                                "overlap_sources":  [
+                                                                                                                                        "psionic_stormLaunch"
+                                                                                                                                    ],
+                                                                                                                "overlap_seconds":  1,
                                                                                                                 "sc1_sound_sources":  [
+                                                                                                                                          "move",
                                                                                                                                           "psionic_storm"
-                                                                                                                                      ]
+                                                                                                                                      ],
+                                                                                                                "sc1_overlap_sources":  [
+                                                                                                                                            "psionic_storm"
+                                                                                                                                        ]
                                                                                                             }
                                                                                       }
                                                          },
@@ -1713,6 +1834,11 @@ window.AUDIO_REGISTRY = {
                                                                                                                       "move"
                                                                                                                   ]
                                                                                             },
+                                                                                   "attack":  {
+                                                                                                  "sound_sources":  [
+                                                                                                                        "attack"
+                                                                                                                    ]
+                                                                                              },
                                                                                    "destroyed":  {
                                                                                                      "sound_sources":  [
                                                                                                                            "death"
@@ -1799,6 +1925,65 @@ window.AUDIO_REGISTRY = {
                                                     }
                                     },
                         "terran":  {
+                                       "firebat":  {
+                                                       "unit":  {
+                                                                    "name":  "Firebat",
+                                                                    "role":  "Core, Damage Dealer",
+                                                                    "weapon":  "Flamethrowers"
+                                                                },
+                                                       "regular_abilities":  {
+                                                                                 "deploy":  {
+                                                                                                "sound_sources":  [
+                                                                                                                      "deploy"
+                                                                                                                  ]
+                                                                                            },
+                                                                                 "move":  {
+                                                                                              "sound_sources":  [
+                                                                                                                    "move"
+                                                                                                                ]
+                                                                                          },
+                                                                                 "attack":  {
+                                                                                                "sound_sources":  [
+                                                                                                                      "attack",
+                                                                                                                      "attackFX"
+                                                                                                                  ],
+                                                                                                "playback":  "sequential",
+                                                                                                "overlap_sources":  [
+                                                                                                                        "attackFX"
+                                                                                                                    ],
+                                                                                                "overlap_seconds":  1,
+                                                                                                "sc1_sound_sources":  [
+                                                                                                                          "attack"
+                                                                                                                      ]
+                                                                                            },
+                                                                                 "destroyed":  {
+                                                                                                   "sound_sources":  [
+                                                                                                                         "death"
+                                                                                                                     ]
+                                                                                               }
+                                                                             },
+                                                       "additional_abilities":  {
+                                                                                    "stimpack":  {
+                                                                                                     "sound_sources":  [
+                                                                                                                           "stimpack",
+                                                                                                                           "stimpackVO"
+                                                                                                                       ],
+                                                                                                     "playback":  "sequential",
+                                                                                                     "overlap_sources":  [
+                                                                                                                             "stimpackVO"
+                                                                                                                         ],
+                                                                                                     "overlap_seconds":  0.5,
+                                                                                                     "sc1_sound_sources":  [
+                                                                                                                               "stimpackVO"
+                                                                                                                           ]
+                                                                                                 },
+                                                                                    "fire_wall":  {
+                                                                                                      "sound_sources":  [
+                                                                                                                            "fire_wall"
+                                                                                                                        ]
+                                                                                                  }
+                                                                                }
+                                                   },
                                        "goliath":  {
                                                        "unit":  {
                                                                     "name":  "Goliath",

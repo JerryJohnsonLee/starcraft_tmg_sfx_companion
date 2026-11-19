@@ -1,0 +1,35 @@
+unit:
+  name: "Firebat"
+  # PROVISIONAL (wave 4, 2026-11): role and weapon are guesses until the official card sheet is published.
+  # The store lists a Flame Template (attack), a Fire Wall token and two Stimpack tokens.
+  role: "Core, Damage Dealer"
+  weapon: "Flamethrowers"
+regular_abilities:
+  deploy:
+    sound_sources: [deploy]
+  move:
+    sound_sources: [move]
+  # Flame Template. SC2: a voice line, with the flamethrower burst (attackFX) starting 1 second into it
+  # (about halfway through most lines, which run 1.7-2.8 s).
+  # SC1: the two "short fire burst" clips of the SC1 Firebat (sc1/attack/).
+  attack:
+    sound_sources: [attack, attackFX]
+    playback: sequential
+    overlap_sources: [attackFX]
+    overlap_seconds: 1
+    sc1_sound_sources: [attack]
+  destroyed:
+    sound_sources: [death]
+additional_abilities:
+  # SC2: the Marine's injection effect (stimpack/), then a Firebat line (stimpackVO/) starting 0.5 seconds into it
+  # (the effect runs about 1.2 s, the lines 1.7-2.3 s), so the two overlap instead of starting together.
+  # SC1: the Firebat uses the Marine's Stimpack clip (injection sound plus voice), so only that one plays.
+  stimpack:
+    sound_sources: [stimpack, stimpackVO]
+    playback: sequential
+    overlap_sources: [stimpackVO]
+    overlap_seconds: 0.5
+    sc1_sound_sources: [stimpackVO]
+  # Fire Wall: the StarCraft I "building on fire" sounds (large or small, random), used on both banks.
+  fire_wall:
+    sound_sources: [fire_wall]

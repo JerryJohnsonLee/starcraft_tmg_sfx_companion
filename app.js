@@ -336,7 +336,9 @@ function updateMusicUI(isPlaying, trackPath = '') {
 /* ==========================================================================
    SFX SOUNDBOARD ENGINE
    ========================================================================== */
-function playSfx(trackPath, cardElement = null, onComplete = null) {
+// `earlyNext` ({ afterSeconds, callback }) fires `callback` that many seconds after the clip actually starts playing,
+// so a following clip can overlap it. It is skipped when the clip already ended or was stopped.
+function playSfx(trackPath, cardElement = null, onComplete = null, earlyNext = null) {
     if (!trackPath) {
         if (onComplete) onComplete();
         return null;
@@ -362,6 +364,15 @@ function playSfx(trackPath, cardElement = null, onComplete = null) {
     }
     audio.onended = finish;
     audio.onerror = finish;
+
+    if (earlyNext) {
+        // Counted from the moment playback really starts (after loading), not from the click.
+        audio.addEventListener('playing', () => {
+            setTimeout(() => {
+                if (!finished && activeSfxAudios.has(audio)) earlyNext.callback();
+            }, earlyNext.afterSeconds * 1000);
+        }, { once: true });
+    }
 
     audio.play().catch(e => {
         console.error("SFX audio blocked by browser: ", e);
@@ -394,23 +405,38 @@ function getAbilitySources(ability, bank) {
 }
 
 function playConfiguredAbility(ability, unitAudio, cardElement, bank) {
-    const tracks = getAbilitySources(ability, bank)
-        .map(source => unitAudio[source] || [])
-        .filter(trackList => trackList.length > 0)
-        .map(trackList => trackList[Math.floor(Math.random() * trackList.length)]);
-    if (tracks.length === 0) return;
+    const steps = getAbilitySources(ability, bank)
+        .map(source => ({ source, trackList: unitAudio[source] || [] }))
+        .filter(step => step.trackList.length > 0)
+        .map(step => ({ source: step.source, track: step.trackList[Math.floor(Math.random() * step.trackList.length)] }));
+    if (steps.length === 0) return;
 
     if (ability.playback === 'sequential') {
+        // Sources listed in `overlap_sources` start `overlap_seconds` after the previous clip started (or when it
+        // ends, if it is shorter) instead of after it ended.
+        const overlapList = (bank === 'sc1' && ability.sc1_overlap_sources) ? ability.sc1_overlap_sources : (ability.overlap_sources || []);
+        const overlapSources = new Set(overlapList);
+        const overlapSeconds = Number(ability.overlap_seconds || 0);
+
         const playNext = index => {
-            if (index < tracks.length) {
-                playSfx(tracks[index], cardElement, () => playNext(index + 1));
-            }
+            if (index >= steps.length) return;
+            const next = steps[index + 1];
+            const startsNextEarly = !!next && overlapSeconds > 0 && overlapSources.has(next.source);
+
+            // The next step may be triggered early (overlap) or when this clip ends; only the first trigger counts.
+            let hasAdvanced = false;
+            const advance = () => {
+                if (hasAdvanced) return;
+                hasAdvanced = true;
+                playNext(index + 1);
+            };
+            playSfx(steps[index].track, cardElement, advance, startsNextEarly ? { afterSeconds: overlapSeconds, callback: advance } : null);
         };
         playNext(0);
         return;
     }
 
-    tracks.forEach(track => playSfx(track, cardElement));
+    steps.forEach(step => playSfx(step.track, cardElement));
 }
 
 /* ==========================================================================

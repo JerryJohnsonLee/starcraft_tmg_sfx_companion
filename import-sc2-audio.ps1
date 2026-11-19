@@ -39,7 +39,8 @@ $importMap = @(
                                                                    '*\campaigns\voidstory.sc2campaign\enus.sc2assets\localizeddata\sounds\vo\pmission_ulnar03_hightemplar_117.ogg') }  # extra mission line, picked by the maintainer
     @{ target = 'protoss/high_templar/move';          patterns = @("$voice\hightemplar\hightemplar_yes??.ogg") }
     @{ target = 'protoss/high_templar/psionic_storm'; patterns = @("$voice\hightemplar\hightemplar_psionicstorm??.ogg") }                    # voice: "Saraht tuun!"
-    @{ target = 'protoss/high_templar/psionic_stormFX'; patterns = @('*\mods\liberty.sc2mod\base.sc2assets\assets\sounds\protoss\hightemplar\hightemplar_psionicstormimpact?.wav') }  # storm impact, played after the voice
+    @{ target = 'protoss/high_templar/psionic_stormFX'; patterns = @('*\mods\liberty.sc2mod\base.sc2assets\assets\sounds\protoss\hightemplar\hightemplar_psionicstormimpact?.wav') }  # storm impact, played after the voice (also the attack effect)
+    @{ target = 'protoss/high_templar/psionic_stormLaunch'; patterns = @('*\mods\liberty.sc2mod\base.sc2assets\assets\sounds\protoss\hightemplar\hightemplar_psionicstormlaunch?.wav') }  # storm launch, played last
     @{ target = 'protoss/high_templar/attack';        patterns = @("$voice\hightemplar\hightemplar_attack04.ogg", "$voice\hightemplar\hightemplar_attack06.ogg") }  # picked by the maintainer; no AttackLaunch file exists
     @{ target = 'protoss/high_templar/death';         patterns = @("$voice\hightemplar\hightemplar_death*.ogg", "$voice\hightemplar\hightemplar_death*.wav",
                                                                    "$voice\hightemplar\hightemplar_energylow00.ogg",                              # "low energy" line as an extra death line
@@ -65,6 +66,13 @@ $importMap = @(
     @{ target = 'zerg/zagara/move';    patterns = @("$zergHeroVoice\zagarahero_yes??.ogg") }
     @{ target = 'zerg/zagara/attack';  patterns = @("$zergHeroVoice\zagarahero_attack??.ogg") }
     @{ target = 'zerg/zagara/death';   patterns = @("$zergHeroVoice\zagarahero_death??.wav") }
+
+    # --- Terran Firebat (TMG wave 4) ---
+    # The StarCraft II voice lines come from the wiki (fetch-sc1-sounds.ps1, Phase A3). Not imported from the game,
+    # copied from existing repo files instead: stimpack/ <- units/terran/marine/stimpack/Marine_Stimpack0-7.ogg (injection effect).
+    @{ target = 'terran/firebat/attackFX'; patterns = @('*\mods\liberty.sc2mod\base.sc2assets\assets\sounds\terran\firebat\firebat_attacklaunch?.wav') }  # flamethrower burst, played with the voice
+    # Fire Wall: the StarCraft I "building on fire" sounds (staged by hand in tmp_assets\SC1), used on both banks, picked at random.
+    @{ target = 'terran/firebat/fire_wall'; patterns = @('*\SC1\bldg\onfirlrg.wav', '*\SC1\sounds\onfirsml.wav') }
 )
 
 # --- Terran Nova (TMG wave 3) ---

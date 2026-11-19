@@ -7,12 +7,22 @@ regular_abilities:
     sound_sources: [deploy]
   move:
     sound_sources: [move]
+  # SC2: a voice line, then a random storm impact (psionic_stormFX) as the actual effect.
+  # SC1: only the quote (the storm impact is an SC2 effect).
   attack:
-    sound_sources: [attack]
+    sound_sources: [attack, psionic_stormFX]
+    playback: sequential
+    sc1_sound_sources: [attack]
   destroyed:
     sound_sources: [death]
 additional_abilities:
+  # SC2: voice, then a random storm impact, then the storm launch, which starts 1 second into the impact
+  # (the impact clips are about 2.5 seconds long) so the two overlap. SC1: only the voice.
   psionic_storm:
-    sound_sources: [psionic_storm, psionic_stormFX]
+    sound_sources: [psionic_storm, psionic_stormFX, psionic_stormLaunch]
     playback: sequential
-    sc1_sound_sources: [psionic_storm]
+    overlap_sources: [psionic_stormLaunch]
+    overlap_seconds: 1
+    # SC1: a random Yes line (the move quotes), with the storm sound starting 1 second into it.
+    sc1_sound_sources: [move, psionic_storm]
+    sc1_overlap_sources: [psionic_storm]
